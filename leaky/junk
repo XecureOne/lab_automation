@@ -1,0 +1,113 @@
+
+    "AppContainerImage":  { "Type": "String", "Default": "" },
+    "App2ContainerImage": { "Type": "String", "Default": "" },
+
+    "AppContainerPort1":  { "Type": "Number", "Default": 0 },
+    "AppContainerPort2":  { "Type": "Number", "Default": 0 },
+    "AppContainerPort3":  { "Type": "Number", "Default": 0 },
+    "AppContainerPort4":  { "Type": "Number", "Default": 0 },
+    "AppContainerPort5":  { "Type": "Number", "Default": 0 },
+
+    "App2ContainerPort1": { "Type": "Number", "Default": 0 },
+    "App2ContainerPort2": { "Type": "Number", "Default": 0 },
+    "App2ContainerPort3": { "Type": "Number", "Default": 0 },
+    "App2ContainerPort4": { "Type": "Number", "Default": 0 },
+    "App2ContainerPort5": { "Type": "Number", "Default": 0 }
+
+
+    "Conditions": {
+    "AppPort1Enabled":  { "Fn::Not": [{ "Fn::Equals": [{ "Ref": "AppContainerPort1" }, "0"] }] },
+    "AppPort2Enabled":  { "Fn::Not": [{ "Fn::Equals": [{ "Ref": "AppContainerPort2" }, "0"] }] },
+    "AppPort3Enabled":  { "Fn::Not": [{ "Fn::Equals": [{ "Ref": "AppContainerPort3" }, "0"] }] },
+    "AppPort4Enabled":  { "Fn::Not": [{ "Fn::Equals": [{ "Ref": "AppContainerPort4" }, "0"] }] },
+    "AppPort5Enabled":  { "Fn::Not": [{ "Fn::Equals": [{ "Ref": "AppContainerPort5" }, "0"] }] },
+
+    "App2Port1Enabled": { "Fn::Not": [{ "Fn::Equals": [{ "Ref": "App2ContainerPort1" }, "0"] }] },
+    "App2Port2Enabled": { "Fn::Not": [{ "Fn::Equals": [{ "Ref": "App2ContainerPort2" }, "0"] }] },
+    "App2Port3Enabled": { "Fn::Not": [{ "Fn::Equals": [{ "Ref": "App2ContainerPort3" }, "0"] }] },
+    "App2Port4Enabled": { "Fn::Not": [{ "Fn::Equals": [{ "Ref": "App2ContainerPort4" }, "0"] }] },
+    "App2Port5Enabled": { "Fn::Not": [{ "Fn::Equals": [{ "Ref": "App2ContainerPort5" }, "0"] }] }
+  },
+
+
+
+
+  "AppLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": { "LogGroupName": "/ecs/app", "RetentionInDays": 7 }
+    },
+
+    "App2LogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": { "LogGroupName": "/ecs/app2", "RetentionInDays": 7 }
+    },
+
+    "AppTaskDefinition": {
+      "Type": "AWS::ECS::TaskDefinition",
+      "DependsOn": ["AppLogGroup", "ECSCluster"],
+      "Properties": {
+        "Family": "app",
+        "Cpu": "512",
+        "Memory": "512",
+        "NetworkMode": "awsvpc",
+        "RequiresCompatibilities": ["EC2"],
+        "ExecutionRoleArn": "arn:aws:iam::959782869917:role/ECSTaskExecutionRole",
+        "ContainerDefinitions": [
+          {
+            "Name": "app",
+            "Image": { "Ref": "AppContainerImage" },
+            "Essential": true,
+            "PortMappings": [
+              { "Fn::If": ["AppPort1Enabled", { "ContainerPort": { "Ref": "AppContainerPort1" }, "Protocol": "tcp" }, { "Ref": "AWS::NoValue" }] },
+              { "Fn::If": ["AppPort2Enabled", { "ContainerPort": { "Ref": "AppContainerPort2" }, "Protocol": "tcp" }, { "Ref": "AWS::NoValue" }] },
+              { "Fn::If": ["AppPort3Enabled", { "ContainerPort": { "Ref": "AppContainerPort3" }, "Protocol": "tcp" }, { "Ref": "AWS::NoValue" }] },
+              { "Fn::If": ["AppPort4Enabled", { "ContainerPort": { "Ref": "AppContainerPort4" }, "Protocol": "tcp" }, { "Ref": "AWS::NoValue" }] },
+              { "Fn::If": ["AppPort5Enabled", { "ContainerPort": { "Ref": "AppContainerPort5" }, "Protocol": "tcp" }, { "Ref": "AWS::NoValue" }] }
+            ],
+            "LogConfiguration": {
+              "LogDriver": "awslogs",
+              "Options": {
+                "awslogs-group": "/ecs/app",
+                "awslogs-region": "ap-south-1",
+                "awslogs-stream-prefix": "app"
+              }
+            }
+          }
+        ]
+      }
+    },
+
+    "App2TaskDefinition": {
+      "Type": "AWS::ECS::TaskDefinition",
+      "DependsOn": ["App2LogGroup", "ECSCluster"],
+      "Properties": {
+        "Family": "app2",
+        "Cpu": "512",
+        "Memory": "512",
+        "NetworkMode": "awsvpc",
+        "RequiresCompatibilities": ["EC2"],
+        "ExecutionRoleArn": "arn:aws:iam::959782869917:role/ECSTaskExecutionRole",
+        "ContainerDefinitions": [
+          {
+            "Name": "app2",
+            "Image": { "Ref": "App2ContainerImage" },
+            "Essential": true,
+            "PortMappings": [
+              { "Fn::If": ["App2Port1Enabled", { "ContainerPort": { "Ref": "App2ContainerPort1" }, "Protocol": "tcp" }, { "Ref": "AWS::NoValue" }] },
+              { "Fn::If": ["App2Port2Enabled", { "ContainerPort": { "Ref": "App2ContainerPort2" }, "Protocol": "tcp" }, { "Ref": "AWS::NoValue" }] },
+              { "Fn::If": ["App2Port3Enabled", { "ContainerPort": { "Ref": "App2ContainerPort3" }, "Protocol": "tcp" }, { "Ref": "AWS::NoValue" }] },
+              { "Fn::If": ["App2Port4Enabled", { "ContainerPort": { "Ref": "App2ContainerPort4" }, "Protocol": "tcp" }, { "Ref": "AWS::NoValue" }] },
+              { "Fn::If": ["App2Port5Enabled", { "ContainerPort": { "Ref": "App2ContainerPort5" }, "Protocol": "tcp" }, { "Ref": "AWS::NoValue" }] }
+            ],
+            "LogConfiguration": {
+              "LogDriver": "awslogs",
+              "Options": {
+                "awslogs-group": "/ecs/app2",
+                "awslogs-region": "ap-south-1",
+                "awslogs-stream-prefix": "app2"
+              }
+            }
+          }
+        ]
+      }
+    }
