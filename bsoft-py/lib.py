@@ -97,3 +97,29 @@ def create_stack(stack_name,param,template):
         if reason:
             print(f"Reason: {reason}")
 
+
+def delete_stack(stack_name):
+    cf_client = boto3.client("cloudformation", region_name=AWS_REGION)
+
+    try:
+        existing = cf_client.describe_stacks(StackName=stack_name)
+        existing_status = existing["Stacks"][0]["StackStatus"]
+        print(f"Stack '{stack_name}' exists with status: {existing_status}")
+    except ClientError as e:
+        if e.response["Error"]["Code"] == "ValidationError":
+            print(f"Stack '{stack_name}' does not exist.")
+            return
+        else:
+            raise
+
+    print(f"Deleting stack '{stack_name}'...")
+    try:
+        cf_client.delete_stack(StackName=stack_name)
+        print("Stack deletion initiated.")
+    except ClientError as e:
+        print(f"Failed to delete stack: {e}")
+        return False
+
+    print(f"\nStack '{stack_name}' deleted successfully!")
+    return True
+

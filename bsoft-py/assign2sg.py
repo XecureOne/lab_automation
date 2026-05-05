@@ -41,4 +41,25 @@ def add_security_group_rules(security_group_id: str, ip: str, region: str = "ap-
             print(f"[✗] Error: {e}")
             raise
 
+def remove_ingress_rule(sg_id, ip):
+    try:
+        ec2.revoke_security_group_ingress(
+            GroupId=sg_id,
+            IpPermissions=[
+                {
+                    "IpProtocol": "-1",
+                    "IpRanges": [
+                        {
+                            "CidrIp": f"{ip}/32",
+                            "Description": "Allow access from specific IP",
+                        }
+                    ],
+                }
+            ],
+        )
+        print(f"Removed ingress rule {protocol}:{port} from {cidr}")
+    except ClientError as e:
+        print(f"Error removing rule: {e}")
+        raise
+
 

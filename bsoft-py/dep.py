@@ -4,9 +4,19 @@ import assign2sg
 import remote
 import find_ip
 import cluster_add
+import secrets
+import string
+
+def generate_id():
+    length = 3
+    first_char = secrets.choice(string.ascii_letters)
+    rest_chars = string.ascii_letters + string.digits
+
+    return first_char + ''.join(secrets.choice(rest_chars) for _ in range(length - 1))
+
 
 def template_sel(choice):
-    with open(f"/home/phoenball/leaky/{choice}.json", "r") as f:
+    with open(f"/home/phoenball/bsoft/leaky/{choice}.json", "r") as f:
         template = f.read()
     return template
 
@@ -26,46 +36,52 @@ PARAMETERS2 = [
 ]
 
 def ipadd_of(student_id):
-    with open("/home/phoenball/leaky/static_ips.json","r") as f:
+    with open("/home/phoenball/bsoft/leaky/static_ips.json","r") as f:
         return json.load(f).get(student_id)
 
-def set_param(student_id,choice):
-    if choice == 'C':
-        PARAMETERS1[0]["ParameterValue"] = f"clu_{student_id}"
-        PARAMETERS1[1]["ParameterValue"] = f"asg_{student_id}"
-    else:
-        room = input("Enter the room:")
-        with open("/home/phoenball/leaky/clusters.json","r") as f:
-            i = json.load(f).get(student_id)
-            with open("/home/phoenball/leaky/task_def.json","r") as ff:
-                j = json.load(ff)
-                PARAMETERS2[0]["ParameterValue"] = f"{i["clu"]}"
-                PARAMETERS2[1]["ParameterValue"] = f"{j.get(room)}"
-                PARAMETERS2[2]["ParameterValue"] = f"{j.get('kali_box')}"
-            lib.scale_asg_from_arn(i["asg"],2)
-
-if __name__ == "__main__":
-    choice = input("[*] Deployment : Cluster(C) or Service(S)?? ")
-    client = str(input("Enter student id:"))
-    STACK_NAME  = f"{client}" if choice == "C" else f"{client}-dep"
-    template = template_sel("cluster" if choice == "C" else "service")
-    set_param(client,choice)
-    PARAMETERS = PARAMETERS1 if choice == "C" else PARAMETERS2
-    out = lib.create_stack(STACK_NAME,PARAMETERS,template)
-    if (choice == "C" and out):
+def cluster(client):
+    STACK_NAME = f"{generate_id()+client+generate_id()}"
+    template = template_sel("cluster")
+    PARAMETERS1[0]["ParameterValue"] = f"clu_{client}"
+    PARAMETERS1[1]["ParameterValue"] = f"asg_{client}"
+    out = lib.create_stack(STACK_NAME,PARAMETERS1,template)
+    if out: 
         clu = next((o['OutputValue'] for o in out if o['OutputKey'] == "ECSClusterArn"), None)
         asg = next((o['OutputValue'] for o in out if o['OutputKey'] == "ECSAutoScalingGroupArn"), None)
-        cluster_add.add_cluster(client,clu,asg)
-    if (choice == "S" and out):
+        cluster_add.add_cluster(client,clu,asg,STACK_NAME)
+
+def service(client):
+    STACK_NAME = f"{generate_id()+client+generate_id()}"
+    template = template_sel("service")
+    room = input("Enter the room:")
+    with open("/home/phoenball/bsoft/leaky/clusters.json","r") as f:
+        i = json.load(f).get(client)
+        with open("/home/phoenball/bsoft/leaky/task_def.json","r") as ff:
+            j = json.load(ff)
+            PARAMETERS2[0]["ParameterValue"] = f"{i["clu"]}"
+            PARAMETERS2[1]["ParameterValue"] = f"{j.get(room)}"
+            PARAMETERS2[2]["ParameterValue"] = f"{j.get('kali_box')}"
+        lib.scale_asg_from_arn(i["asg"],2)
+    out = lib.create_stack(STACK_NAME,PARAMETERS2,template)
+    cluster_add.add_service(client,STACK_NAME)
+    if out:
         ip = []
         client_ip = ipadd_of(client)
         for i in out:
             if i['OutputKey'].startswith('Container'):
                 assign2sg.add_security_group_rules(i['OutputValue'],client_ip)
             else:
-                ip.append(find_ip.get_task_private_ips(PARAMETERS[0]["ParameterValue"], i['OutputValue']))
-        remote.send(ip[0],ip[1],client_ip)
+                ip.append(find_ip.get_task_private_ips(PARAMETERS2[0]["ParameterValue"], i['OutputValue']))
+        remote.send_add(ip[0],ip[1],client_ip)
 
+
+if __name__ == "__main__":
+    choice = input("[*] Deployment : Cluster(C) or Service(S)?? ")
+    client = str(input("Enter student id:"))
+    cluster(client) if choice == "C" else service(client)
+
+            
+# ECSClusterArn: arn:aws:ecs:ap-south-1:959782869917:cluster/s
             
 # ECSClusterArn: arn:aws:ecs:ap-south-1:959782869917:cluster/student-011
 #   App2TaskDefinitionArn: arn:aws:ecs:ap-south-1:959782869917:task-definition/app2:25
