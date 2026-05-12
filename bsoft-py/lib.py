@@ -100,7 +100,6 @@ def create_stack(stack_name,param,template):
 
 def delete_stack(stack_name):
     cf_client = boto3.client("cloudformation", region_name=AWS_REGION)
-
     try:
         existing = cf_client.describe_stacks(StackName=stack_name)
         existing_status = existing["Stacks"][0]["StackStatus"]

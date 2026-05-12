@@ -1,0 +1,22 @@
+regions:
+  - ap-south-1
+  - global
+
+blocklist:
+  - "959782869917"  # Replace with your management account ID
+
+accounts:
+  "275023965684":
+    alias: "lab-student01"
+    filters:
+      IAMRole:
+        - "OrganizationAccountAccessRole"
+      IAMRolePolicyAttachment:
+        - "OrganizationAccountAccessRole -> AdministratorAccess"
+      IAMRolePolicy:
+        - property: role
+          value: "OrganizationAccountAccessRole"
+      IAMUser:
+        - "Coder"
+      IAMUserLoginProfile:
+        - "Coder"
