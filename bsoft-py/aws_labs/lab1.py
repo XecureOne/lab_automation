@@ -1,3 +1,5 @@
+import boto3
+import botocore
 client = ''
 
 def test_case1():
@@ -26,9 +28,12 @@ def test_case2():
     except Exception as e:
         print(e)
 
-def run_test_cases(cl):
+def run_test_cases(credentials):
     global client
-    client = cl
+    client = boto3.client('iam',
+        aws_access_key_id=credentials["AccessKeyId"],
+        aws_secret_access_key=credentials["SecretAccessKey"],
+        aws_session_token=credentials["SessionToken"],)
     flag = []
     for i in range(1,3):
         flag.append(globals()[f"test_case{i}"]())
