@@ -99,7 +99,7 @@ def trigger_access_s3(
     account_id: str,
     permissions_key: str,
     account_name: str = "Coder",
-    permissions_bucket: str = "bsoft-aws-labs",
+    permissions_bucket: str = "bsoft-aws-labs-880690594512-ap-south-1-an",
     session_tag: str = "TempSession",
 ) -> dict:
 

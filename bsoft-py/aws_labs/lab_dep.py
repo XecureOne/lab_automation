@@ -19,7 +19,7 @@ def fetch_account_alias(account_id):
 
 def list_active_accounts():
     res = client.list_accounts_for_parent(
-        ParentId="ou-joyg-0snv4uu2",
+        ParentId="ou-anaf-fe7lhyxx",
     )
     if res:
         res = res["Accounts"]
@@ -52,8 +52,8 @@ def detach_student():
     with open("../sample.json","r") as f:
         res = json.loads(f.read())
         res.pop(student_id)
-    with open("../sample.json","w") as ff:
-        ff.write(json.dumps(res))
+        with open("../sample.json","w") as ff:
+            ff.write(json.dumps(res))
     
 def start_lab():
     if append2student(student_id,lab_id,find_first_active_account(list_active_accounts())):
@@ -71,7 +71,7 @@ def del_lab():
         account_id=account_id
     )
     alias = fetch_account_alias(account_id)
-    creds = _assume_child_role(account_id,_assume_child_role("959782869917",{},"rt_provider_core_backend"))
+    creds = _assume_child_role(account_id,_assume_child_role("880690594512",{},"rt_provider_core_backend"))
     nuke.nuke(account_id,alias,creds)
     detach_student()
 

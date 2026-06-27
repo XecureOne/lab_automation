@@ -1,0 +1,88 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "iam:ListPolicies",
+                "iam:ListUsers",
+                "iam:*User*",
+                "iam:*User",
+                "iam:ListAccessKeys",
+                "iam:ListSigningCertificates",
+                "iam:ListSSHPublicKeys",
+                "iam:ListServiceSpecificCredentials",
+                "iam:ListMFADevices"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowAttachAndDetachCapabilities",
+            "Effect": "Allow",
+            "Action": [
+                "iam:AttachGroupPolicy",
+                "iam:AttachUserPolicy",
+                "iam:DetachGroupPolicy",
+                "iam:DetachUserPolicy"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "DenyAllAWSManagedPoliciesExceptWhitelist",
+            "Effect": "Deny",
+            "Action": [
+                "iam:AttachGroupPolicy",
+                "iam:AttachUserPolicy",
+                "iam:DetachGroupPolicy",
+                "iam:DetachUserPolicy"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "ArnLike": {
+                    "iam:PolicyARN": "arn:aws:iam::aws:policy/*"
+                },
+                "ArnNotEquals": {
+                    "iam:PolicyARN": [
+                        "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess",
+                        "arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess"
+                    ]
+                }
+            }
+        },
+        {
+            "Sid": "VisualEditor3",
+            "Effect": "Deny",
+            "Action": [
+                "iam:AddUserToGroup",
+                "iam:ListGroupsForUser",
+                "iam:AttachGroupPolicy",
+                "iam:PutUserPolicy",
+                "iam:ListAttachedUserPolicies",
+                "iam:AttachUserPolicy",
+                "iam:DetachGroupPolicy",
+                "iam:ListUserPolicies"
+            ],
+            "Resource": "arn:aws:iam::*:user/Coder"
+        },
+        {
+            "Sid": "VisualEditor4",
+            "Effect": "Deny",
+            "Action": [
+                "iam:CreatePolicy",
+                "iam:CreateLoginProfile",
+                "iam:PutUserPolicy",
+                "iam:AttachUserPolicy",
+                "iam:UpdateAccessKey",
+                "iam:AttachRolePolicy",
+                "iam:DeleteUser",
+                "iam:PutRolePolicy",
+                "iam:CreatePolicyVersion",
+                "iam:CreateUser",
+                "iam:CreateAccessKey",
+                "iam:SetDefaultPolicyVersion"
+            ],
+            "Resource": "arn:aws:iam::*:user/${aws:username}"
+        }
+    ]
+}

@@ -1,4 +1,4 @@
 {
     "leaky_devops":"arn:aws:ecs:ap-south-1:959782869917:task-definition/leaky_devops:1",
-    "kali_box":"arn:aws:ecs:ap-south-1:959782869917:task-definition/kali_box:1"
+    "kali_box":"arn:aws:ecs:ap-south-1:959782869917:task-definition/kali_box:2"
 }
