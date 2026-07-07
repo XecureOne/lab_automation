@@ -1,0 +1,97 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ViewEC2ResourcesForConsole",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:Describe*"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "EnsureDefaultVpcExists",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:CreateDefaultVpc",
+        "ec2:CreateDefaultSubnet"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "LaunchInstanceUsingExistingDefaultNetworking",
+      "Effect": "Allow",
+      "Action": "ec2:RunInstances",
+      "Resource": [
+        "arn:aws:ec2:*:*:instance/*",
+        "arn:aws:ec2:*:*:image/*",
+        "arn:aws:ec2:*:*:security-group/*",
+        "arn:aws:ec2:*:*:subnet/*",
+        "arn:aws:ec2:*:*:network-interface/*",
+        "arn:aws:ec2:*:*:volume/*"
+      ]
+    },
+    {
+      "Sid": "ManageOwnInstanceLifecycle",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:TerminateInstances",
+        "ec2:StopInstances",
+        "ec2:StartInstances",
+        "ec2:RebootInstances",
+        "ec2:ModifyInstanceAttribute"
+      ],
+      "Resource": "arn:aws:ec2:*:*:instance/*"
+    },
+    {
+      "Sid": "ManageSecurityGroupForSSH",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:CreateSecurityGroup",
+        "ec2:DeleteSecurityGroup",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "ec2:RevokeSecurityGroupIngress"
+      ],
+      "Resource": [
+        "arn:aws:ec2:*:*:security-group/*",
+        "arn:aws:ec2:*:*:vpc/*"
+      ]
+    },
+    {
+      "Sid": "TagAndUntagOwnResources",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:CreateTags",
+        "ec2:DeleteTags"
+      ],
+      "Resource": [
+        "arn:aws:ec2:*:*:instance/*",
+        "arn:aws:ec2:*:*:volume/*",
+        "arn:aws:ec2:*:*:security-group/*"
+      ]
+    },
+    {
+      "Sid": "DenyUnrelatedServices",
+      "Effect": "Deny",
+      "Action": [
+        "iam:*",
+        "organizations:*",
+        "lambda:*",
+        "s3:*",
+        "cloudformation:*",
+        "route53:*",
+        "rds:*",
+        "ecs:*",
+        "eks:*",
+        "dynamodb:*",
+        "secretsmanager:*",
+        "kms:*",
+        "sns:*",
+        "sqs:*",
+        "cloudtrail:*",
+        "guardduty:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
