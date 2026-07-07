@@ -16,7 +16,3 @@ accounts:
       IAMRolePolicy:
         - property: role
           value: "OrganizationAccountAccessRole"
-      IAMUser:
-        - "Coder"
-      IAMUserLoginProfile:
-        - "Coder"

@@ -31,10 +31,6 @@ accounts:
       IAMRolePolicy:
         - property: role
           value: "OrganizationAccountAccessRole"
-      IAMUser:
-        - "Coder"
-      IAMUserLoginProfile:
-        - "Coder"
 """
 
     with open(output_path, "w") as f:

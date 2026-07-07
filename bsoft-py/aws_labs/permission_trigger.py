@@ -51,6 +51,18 @@ def inject_permissions(
 
     iam = role_credentials._child_iam(account_id)
 
+    try:
+        iam.create_user(
+            UserName=user_name
+        )
+        print("User Created. !!")
+    except ClientError as e:
+        if e.response["Error"]["Code"] == "EntityAlreadyExists":
+            print("User already exists")
+        raise
+
+    time.sleep(2)
+
     log.info("Injecting inline policy '%s' onto user '%s' in account %s …",
              INLINE_POLICY_NAME, user_name, account_id)
     iam.put_user_policy(
