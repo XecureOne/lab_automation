@@ -1,1 +1,1 @@
-{"clu": "arn:aws:ecs:ap-south-1:959782869917:cluster/clu_student01", "asg": "asg_student01", "clu_stack": "fwXstudent01Lzq"}
+{"student01": {"clu": "arn:aws:ecs:ap-south-1:880690594512:cluster/clu_student01", "asg": "asg_student01", "clu_stack": "gnjstudent01E7A"}}

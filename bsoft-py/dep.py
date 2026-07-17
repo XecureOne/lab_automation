@@ -16,7 +16,7 @@ def generate_id():
 
 
 def template_sel(choice):
-    with open(f"/home/phoenball/bsoft/leaky/{choice}.json", "r") as f:
+    with open(f"/home/carpediem/bsoft/leaky/{choice}.json", "r") as f:
         template = f.read()
     return template
 
@@ -26,17 +26,17 @@ def template_sel(choice):
 
 PARAMETERS1 = [
     {"ParameterKey": "ECSClusterName", "ParameterValue": ""},
-    {"ParameterKey": "ECSAutoScalingGroupName", "ParameterValue": ""}
+    {"ParameterKey": "ECSAutoScalingGroupName", "ParameterValue": ""},
+    {"ParameterKey": "StudentId", "ParameterValue": ""}
 ]
 
 PARAMETERS2 = [
     {"ParameterKey": "ClusterArn",  "ParameterValue": ""},
-    {"ParameterKey": "AppTaskDefinitionArn", "ParameterValue": ""},
-    {"ParameterKey": "App2TaskDefinitionArn",  "ParameterValue": ""}
+    {"ParameterKey": "AppTaskDefinitionArn", "ParameterValue": ""}
 ]
 
 def ipadd_of(student_id):
-    with open("/home/phoenball/bsoft/leaky/static_ips.json","r") as f:
+    with open("/home/carpediem/bsoft/leaky/static_ips.json","r") as f:
         return json.load(f).get(student_id)
 
 def cluster(client):
@@ -44,6 +44,7 @@ def cluster(client):
     template = template_sel("cluster")
     PARAMETERS1[0]["ParameterValue"] = f"clu_{client}"
     PARAMETERS1[1]["ParameterValue"] = f"asg_{client}"
+    PARAMETERS1[2]["ParameterValue"] = client
     out = lib.create_stack(STACK_NAME,PARAMETERS1,template)
     if out: 
         clu = next((o['OutputValue'] for o in out if o['OutputKey'] == "ECSClusterArn"), None)
@@ -54,25 +55,24 @@ def service(client):
     STACK_NAME = f"{generate_id()+client+generate_id()}"
     template = template_sel("service")
     room = input("Enter the room:")
-    with open("/home/phoenball/bsoft/leaky/clusters.json","r") as f:
+    with open("/home/carpediem/bsoft/leaky/clusters.json","r") as f:
         i = json.load(f).get(client)
-        with open("/home/phoenball/bsoft/leaky/task_def.json","r") as ff:
+        with open("/home/carpediem/bsoft/leaky/task_def.json","r") as ff:
             j = json.load(ff)
             PARAMETERS2[0]["ParameterValue"] = f"{i["clu"]}"
             PARAMETERS2[1]["ParameterValue"] = f"{j.get(room)}"
-            PARAMETERS2[2]["ParameterValue"] = f"{j.get('kali_box')}"
-        lib.scale_asg_from_arn(i["asg"],2)
+        lib.scale_asg_from_arn(i["asg"],1)
     out = lib.create_stack(STACK_NAME,PARAMETERS2,template)
     cluster_add.add_service(client,STACK_NAME)
     if out:
-        ip = []
+        ip = ''
         client_ip = ipadd_of(client)
         for i in out:
             if i['OutputKey'].startswith('Container'):
                 assign2sg.add_security_group_rules(i['OutputValue'],client_ip)
             else:
-                ip.append(find_ip.get_task_private_ips(PARAMETERS2[0]["ParameterValue"], i['OutputValue']))
-        remote.send_add(ip[0],ip[1],client_ip)
+                ip = find_ip.get_task_private_ips(PARAMETERS2[0]["ParameterValue"], i['OutputValue'])
+        remote.send_uni_add(ip,client_ip)
 
 
 if __name__ == "__main__":

@@ -8,36 +8,15 @@
     },
     "AppTaskDefinitionArn": {
       "Type": "String"
-    },
-    "App2TaskDefinitionArn": {
-      "Type": "String"
     }
   },
 
   "Resources": {
-
     "ContainerSecurityGroup": {
       "Type": "AWS::EC2::SecurityGroup",
       "Properties": {
-        "GroupDescription": "Container task - allow all traffic from Container2",
-        "VpcId": "vpc-0cbebf51c551f38ce",
-        "SecurityGroupIngress": [
-          {
-            "IpProtocol": "-1",
-            "SourceSecurityGroupId": { "Fn::GetAtt": ["Container2SecurityGroup", "GroupId"] }
-          }
-        ],
-        "SecurityGroupEgress": [
-          { "IpProtocol": "-1", "CidrIp": "0.0.0.0/0" }
-        ]
-      }
-    },
-
-    "Container2SecurityGroup": {
-      "Type": "AWS::EC2::SecurityGroup",
-      "Properties": {
-        "GroupDescription": "Container2 task - no inbound",
-        "VpcId": "vpc-0cbebf51c551f38ce",
+        "GroupDescription": "Container task",
+        "VpcId": "vpc-048641cb6ee426d64",
         "SecurityGroupIngress": [],
         "SecurityGroupEgress": [
           { "IpProtocol": "-1", "CidrIp": "0.0.0.0/0" }
@@ -54,25 +33,8 @@
         "TaskDefinition": { "Ref": "AppTaskDefinitionArn" },
         "NetworkConfiguration": {
           "AwsvpcConfiguration": {
-            "Subnets": ["subnet-07466d983628bb51b"],
+            "Subnets": ["subnet-0f1e9833f5bad85a1","subnet-0ab2cc904a1af47d2","subnet-0dc03779a49bb11fc"],
             "SecurityGroups": [{ "Fn::GetAtt": ["ContainerSecurityGroup", "GroupId"] }],
-            "AssignPublicIp": "DISABLED"
-          }
-        }
-      }
-    },
-
-    "App2Service": {
-      "Type": "AWS::ECS::Service",
-      "Properties": {
-        "Cluster": { "Ref": "ClusterArn" },
-        "LaunchType": "EC2",
-        "DesiredCount": 1,
-        "TaskDefinition": { "Ref": "App2TaskDefinitionArn" },
-        "NetworkConfiguration": {
-          "AwsvpcConfiguration": {
-            "Subnets": ["subnet-07466d983628bb51b"],
-            "SecurityGroups": [{ "Fn::GetAtt": ["Container2SecurityGroup", "GroupId"] }],
             "AssignPublicIp": "DISABLED"
           }
         }
@@ -85,17 +47,9 @@
       "Value": { "Ref": "ContainerSecurityGroup" },
       "Export": { "Name": "ContainerSecurityGroupId" }
     },
-    "Container2SecurityGroupId": {
-      "Value": { "Ref": "Container2SecurityGroup" },
-      "Export": { "Name": "Container2SecurityGroupId" }
-    },
     "AppServiceArn": {
       "Value": { "Ref": "AppService" },
       "Export": { "Name": "AppServiceArn" }
-    },
-    "App2ServiceArn": {
-      "Value": { "Ref": "App2Service" },
-      "Export": { "Name": "App2ServiceArn" }
     }
   }
 }
