@@ -6,6 +6,7 @@ import string
 import secrets
 import time
 import role_credentials
+from botocore.exceptions import ClientError
 
 log = logging.getLogger(__name__)
 
@@ -55,7 +56,7 @@ def inject_permissions(
         iam.create_user(
             UserName=user_name
         )
-        print("User Created. !!")
+        print("User Created.")
     except ClientError as e:
         if e.response["Error"]["Code"] == "EntityAlreadyExists":
             print("User already exists")
@@ -65,6 +66,18 @@ def inject_permissions(
 
     log.info("Injecting inline policy '%s' onto user '%s' in account %s …",
              INLINE_POLICY_NAME, user_name, account_id)
+    
+    try:
+        response = iam.list_user_policies(UserName="Coder")
+        print(response)
+
+        # iam.delete_user_policy(
+        # UserName="Coder",
+        # PolicyName="TempSession"
+        # )
+    except ClientError as e:
+        print(e)
+
     iam.put_user_policy(
         UserName=user_name,
         PolicyName=INLINE_POLICY_NAME,

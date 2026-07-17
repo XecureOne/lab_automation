@@ -4,7 +4,8 @@
 
   "Parameters": {
     "ECSClusterName": {"Type": "String", "Default": ""},
-    "ECSAutoScalingGroupName": {"Type": "String", "Default": ""}
+    "ECSAutoScalingGroupName": {"Type": "String", "Default": ""},
+    "StudentId": {"Type":"String", "Default":""}
   },
 
   "Resources": {
@@ -12,9 +13,45 @@
       "Type": "AWS::EC2::SecurityGroup",
       "Properties": {
         "GroupDescription": "EC2 host - allow all traffic within VPC for awsvpc ENI attachment",
-        "VpcId": "vpc-0cbebf51c551f38ce",
+        "VpcId": "vpc-048641cb6ee426d64",
         "SecurityGroupIngress": [
-          { "IpProtocol": "-1", "CidrIp": "10.0.0.0/16" }
+        { 
+            "IpProtocol": "-1", 
+            "CidrIp": "10.0.0.0/16" 
+        },
+        {
+            "IpProtocol": "tcp",
+            "FromPort": 80,
+            "ToPort": 80,
+            "IpRanges": [
+                {
+                    "CidrIp": "10.0.134.204/32",
+                    "Description": "Allow HTTP from specific IP"
+                }
+            ]
+        },
+        {
+            "IpProtocol": "tcp",
+            "FromPort": 443,
+            "ToPort": 443,
+            "IpRanges": [
+                {
+                    "CidrIp": "10.0.134.204/32",
+                    "Description": "Allow HTTPS from specific IP"
+                }
+            ]
+        },
+        {
+            "IpProtocol": "icmp",
+            "FromPort": -1,
+            "ToPort": -1,
+            "IpRanges": [
+                {
+                    "CidrIp": "10.0.134.204/32",
+                    "Description": "Allow ICMP (Ping) from specific IP"
+                }
+            ]
+        }
         ],
         "SecurityGroupEgress": [
           { "IpProtocol": "-1", "CidrIp": "0.0.0.0/0" }
@@ -29,7 +66,9 @@
 
     "ECSCluster": {
       "Type": "AWS::ECS::Cluster",
-      "Properties": { "ClusterName": { "Ref": "ECSClusterName"} }
+      "Properties": { "ClusterName": { "Ref": "ECSClusterName"},
+      "Tags": [{ "Key": "StudentId", "Value": { "Ref": "StudentId" } }]
+      } 
     },
 
     "ECSLaunchTemplate": {
@@ -39,7 +78,7 @@
         "LaunchTemplateData": {
           "ImageId": "ami-057c5aaa689beed99",
           "InstanceType": "t2.micro",
-          "KeyName": "mumbai",
+          "KeyName": "mumb",
           "IamInstanceProfile": {
             "Name": { "Ref": "ECSInstanceProfile" }
           },
@@ -65,13 +104,13 @@
       "Properties": {
         "AutoScalingGroupName": { "Ref": "ECSAutoScalingGroupName"},
         "MinSize": "0",
-        "MaxSize": "2",
+        "MaxSize": "1",
         "DesiredCapacity": "0",
         "LaunchTemplate": {
           "LaunchTemplateId": { "Ref": "ECSLaunchTemplate" },
           "Version": { "Fn::GetAtt": ["ECSLaunchTemplate", "LatestVersionNumber"] }
         },
-        "VPCZoneIdentifier": ["subnet-07466d983628bb51b"],
+        "VPCZoneIdentifier": ["subnet-0dc03779a49bb11fc","subnet-0ab2cc904a1af47d2","subnet-0f1e9833f5bad85a1"],
         "Tags": [{ "Key": "AmazonECSManaged", "Value": "true", "PropagateAtLaunch": true }]
       }
     },

@@ -7,10 +7,6 @@ from botocore.exceptions import ClientError
 
 AWS_REGION  = "ap-south-1"
 
-TAGS = [
-    {"Key": "Project",   "Value": "MyProject"},
-    {"Key": "ManagedBy", "Value": "boto3-script"},
-]
 
 def scale_asg_from_arn(asg_name, desired_capacity, region="ap-south-1"):
     autoscaling = boto3.client("autoscaling", region_name=region)
@@ -69,7 +65,6 @@ def create_stack(stack_name,param,template):
             StackName=stack_name,
             TemplateBody=template,
             Parameters=param,
-            Tags=TAGS,
             Capabilities=["CAPABILITY_NAMED_IAM"],
             OnFailure="ROLLBACK",
             EnableTerminationProtection=False,
