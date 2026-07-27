@@ -1,0 +1,15 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "RDSReadForMigration",
+      "Effect": "Allow",
+      "Action": [
+        "rds:*",
+        "ec2:*",
+        "s3:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

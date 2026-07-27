@@ -1,0 +1,16 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "RDSManagement",
+      "Effect": "Allow",
+      "Action": [
+        "rds:*",
+        "ec2:*",
+        "secretsmanager:*",
+        "kms:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

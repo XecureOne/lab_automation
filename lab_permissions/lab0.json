@@ -1,0 +1,94 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowOnlyOnCertain",
+            "Effect": "Allow",
+            "Action": [
+                "iam:ListRoles",
+                "iam:ListUsers",
+                "iam:ListGroups",
+                "iam:*Role*",
+                "iam:*User*",
+                "iam:*Group*",
+                "iam:*Policies",
+                "iam:*LoginProfile",
+                "iam:*InstanceProfile*",
+                "iam:ListAccessKeys",
+                "iam:ListSigningCertificates",
+                "iam:ListSSHPublicKeys",
+                "iam:ListServiceSpecificCredentials",
+                "iam:ListMFADevices"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "PassRoleScopedToAWSServices",
+            "Effect": "Deny",
+            "Action": "iam:PassRole",
+            "Resource": "arn:aws:iam::*:role/*",
+            "Condition": {
+                "StringNotLike": {
+                "iam:PassedToService": "*.amazonaws.com"
+                }
+            }
+            },
+        {
+            "Sid": "DenyAllIAMOnSelf",
+            "Effect": "Deny",
+            "Action": "iam:*",
+            "Resource": "arn:aws:iam::*:user/Coder"
+        },
+        {
+            "Sid": "DenyAllIAMOnOrgAccessRole",
+            "Effect": "Deny",
+            "Action": "iam:*",
+            "Resource": "arn:aws:iam::*:role/OrganizationAccountAccessRole"
+        },
+        {
+            "Sid": "RequireBoundaryOnCreateUser",
+            "Effect": "Deny",
+            "Action": "iam:CreateUser",
+            "Resource": "*",
+            "Condition": {
+                "StringNotEquals": {
+                    "iam:PermissionsBoundary": "__BOUNDARY_ARN__"
+                }
+            }
+        },
+        {
+            "Sid": "RequireBoundaryOnCreateRole",
+            "Effect": "Deny",
+            "Action": "iam:CreateRole",
+            "Resource": "*",
+            "Condition": {
+                "StringNotEquals": {
+                    "iam:PermissionsBoundary": "__BOUNDARY_ARN__"
+                }
+            }
+        },
+        {
+            "Sid": "DenyRemovingBoundary",
+            "Effect": "Deny",
+            "Action": [
+                "iam:*UserPermissionsBoundary",
+                "iam:*RolePermissionsBoundary"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "ProtectBoundaryPolicyDocument",
+            "Effect": "Deny",
+            "Action": [
+                "iam:*Policy*"
+            ],
+            "Resource": ["__BOUNDARY_ARN__","__POLICY_ARN__"]
+        },
+        {
+            "Sid": "DenyOrganizationsVisibility",
+            "Effect": "Deny",
+            "Action": "organizations:*",
+            "Resource": "*"
+        }
+    ]
+}

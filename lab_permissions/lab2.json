@@ -5,26 +5,9 @@
       "Sid": "BucketCreationAndListing",
       "Effect": "Allow",
       "Action": [
-        "s3:CreateBucket",
-        "s3:ListAllMyBuckets",
-        "s3:GetBucketLocation"
+        "s3:*"
       ],
       "Resource": "*"
-    },
-    {
-      "Sid": "BucketConfiguration",
-      "Effect": "Allow",
-      "Action": [
-        "s3:GetBucketPolicy",
-        "s3:PutBucketPolicy",
-        "s3:DeleteBucketPolicy",
-
-        "s3:GetBucketPublicAccessBlock",
-        "s3:PutBucketPublicAccessBlock",
-
-        "s3:ListBucket"
-      ],
-      "Resource": "arn:aws:s3:::*"
     }
   ]
 }

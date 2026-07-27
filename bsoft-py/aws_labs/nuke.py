@@ -12,17 +12,15 @@ logger = logging.getLogger(__name__)
 def build_config(account_id: str, alias: str, output_path: str = "aws-nuke-final.yaml"):
     """Build the aws-nuke config using f-string templating and write to disk."""
 
-    config = f"""
-regions:
+    config = f"""regions:
   - ap-south-1
   - global
 
 blocklist:
-  - "959782869917"  # Replace with your management account ID
+  - "880690594512"  # management account ID
 
 accounts:
   "{account_id}":
-    alias: "{alias}"
     filters:
       IAMRole:
         - "OrganizationAccountAccessRole"
@@ -31,6 +29,9 @@ accounts:
       IAMRolePolicy:
         - property: role
           value: "OrganizationAccountAccessRole"
+      IAMPolicy:
+        - "arn:aws:iam::{account_id}:policy/CoderCreatedIdentityBoundary"
+        - "arn:aws:iam::{account_id}:policy/DefaultIamPolicy"
 """
 
     with open(output_path, "w") as f:
@@ -41,6 +42,45 @@ accounts:
 
 def run_aws_nuke(config_path: str,creds: dict , dry_run: bool = False, profile: str = None) -> None:
     cmd = ["aws-nuke","nuke", "-c", config_path,"--access-key-id",creds["AccessKeyId"],"--secret-access-key",creds["SecretAccessKey"],"--session-token",creds["SessionToken"], "--force"]
+    if not dry_run:
+        cmd.append("--no-dry-run")
+    if profile:
+        cmd.extend(["--profile", profile])
+
+    logger.info(f"Command: {' '.join(cmd)}")
+
+    try:
+        process = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1
+        )
+
+        for line in process.stdout:
+            line = line.rstrip()
+            logger.info(line)
+            if "ERROR" in line:
+                logger.error(f"aws-nuke error: {line}")
+            if "Nuke complete" in line:
+                logger.info("✅ aws-nuke finished successfully.")
+
+        process.wait()
+
+        if process.returncode != 0:
+            logger.error(f"aws-nuke exited with code {process.returncode}")
+            sys.exit(process.returncode)
+
+    except FileNotFoundError:
+        logger.error("aws-nuke binary not found. Ensure it is installed and in your PATH.")
+        sys.exit(1)
+    except Exception as e:
+        logger.exception(f"Unexpected error: {e}")
+        sys.exit(1)
+
+def test_run(config_path: str,creds: dict , dry_run: bool = False, profile: str = None) -> None:
+    cmd = ["aws-nuke","nuke", "-c", config_path,"--access-key-id",creds["AccessKeyId"],"--secret-access-key",creds["SecretAccessKey"],"--session-token",creds["SessionToken"]]
     if not dry_run:
         cmd.append("--no-dry-run")
     if profile:
@@ -89,3 +129,8 @@ def nuke(account_id,account_alias,creds):
         config_path="nuke_config.yaml",
         creds=creds
     )
+    # test_run(
+    #     config_path="nuke_config.yaml",
+    #     creds=creds,
+    #     dry_run=True
+    # )

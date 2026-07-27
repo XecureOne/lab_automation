@@ -1,6 +1,8 @@
 import boto3
 from botocore.exceptions import ClientError
 from role_credentials import _child_creds
+import json
+import nuke
 
 
 def create_iam_user(user_name: str,iam_client):
@@ -20,6 +22,51 @@ def create_iam_user(user_name: str,iam_client):
         else:
             print(f"❌ Failed to create user: {e}")
         return None
+
+def create_iam_boundary(iam):
+    policy_document = ''
+    with open('/home/carpediem/bsoft/lab_permissions/boundary.json','r') as f:
+        policy_document = json.load(f)
+
+    try:
+        response = iam.create_policy(
+            PolicyName="CoderCreatedIdentityBoundary",
+            PolicyDocument=json.dumps(policy_document),
+            Description="Permissions boundary created by automation."
+        )
+
+        print("Policy created successfully!")
+        print("Policy ARN:", response["Policy"]["Arn"])
+
+    except ClientError as e:
+        if e.response["Error"]["Code"] == "EntityAlreadyExists":
+            print(f"Policy already exists.")
+        else:
+            raise
+
+def create_iam_policy(iam,account_id):
+    policy_document = ''
+    with open('/home/carpediem/bsoft/lab_permissions/lab0.json','r') as f:
+        policy_document = json.load(f)
+
+    policy_document = json.dumps(policy_document).replace("__BOUNDARY_ARN__",f"arn:aws:iam::{account_id}:policy/CoderCreatedIdentityBoundary")
+    policy_document = policy_document.replace("__POLICY_ARN__",f"arn:aws:iam::{account_id}:policy/DefaultIamPolicy")
+
+    try:
+        response = iam.create_policy(
+            PolicyName="DefaultIamPolicy",
+            PolicyDocument=policy_document,
+            Description="Permissions boundary created by automation."
+        )
+
+        print("Policy created successfully!")
+        print("Policy ARN:", response["Policy"]["Arn"])
+
+    except ClientError as e:
+        if e.response["Error"]["Code"] == "EntityAlreadyExists":
+            print(f"Policy already exists.")
+        else:
+            raise
 
 def create_aws_account_alias(alias: str,iam_client):
     """
@@ -51,6 +98,15 @@ def list_active_accounts():
         # print(res)cl
         return res
 
+def fetch_account_alias(account_id):
+    with open("./alias_mapping.json","r") as f:
+        res = json.loads(f.read())
+        return res.get(account_id)
+
+def full_cleanup(account_id,creds):
+    alias = fetch_account_alias(account_id)
+    nuke.nuke(account_id,alias,creds)
+
 # --- Execution ---
 if __name__ == "__main__":
     res = list_active_accounts()
@@ -62,7 +118,9 @@ if __name__ == "__main__":
             aws_secret_access_key=credentials["SecretAccessKey"],
             aws_session_token=credentials["SessionToken"],
         )
-        create_iam_user("Coder",client)
-        create_aws_account_alias(i[1],client)
+        # create_iam_user("Coder",client)
+        # create_aws_account_alias(i[1],client)
+        # create_iam_policy(client,i[0])
+        full_cleanup(i[0],credentials)
 
     
