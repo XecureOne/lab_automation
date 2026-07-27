@@ -1,0 +1,21 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "FullEC2Access",
+      "Effect": "Allow",
+      "Action": "ec2:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyUnrelatedServices",
+      "Effect": "Deny",
+      "Action": [
+        "s3:*", "iam:*", "lambda:*", "ecs:*", "ecr:*", "rds:*",
+        "dynamodb:*", "cloudformation:*", "cloudwatch:*", "route53:*",
+        "sns:*", "sqs:*", "secretsmanager:*", "organizations:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

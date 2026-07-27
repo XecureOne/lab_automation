@@ -17,10 +17,10 @@
       "Sid": "DenyUnrelatedServices",
       "Effect": "Deny",
       "Action": [
-        "s3:*", "iam:*", "lambda:*", "rds:*", "ecs:*", "ecr:*",
-        "cloudformation:*", "cloudwatch:*", "route53:*", "sns:*",
-        "sqs:*", "dynamodb:*", "elasticloadbalancing:*", "autoscaling:*",
-        "secretsmanager:*", "kms:*", "acm:*", "organizations:*"
+        "s3:*", "iam:*", "lambda:*", "ecs:*", "ecr:*", "rds:*",
+        "dynamodb:*", "cloudformation:*", "cloudwatch:*", "route53:*",
+        "sns:*", "sqs:*", "secretsmanager:*", "kms:*", "acm:*",
+        "organizations:*", "autoscaling:*", "elasticloadbalancing:*"
       ],
       "Resource": "*"
     }

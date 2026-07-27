@@ -1,0 +1,58 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "FullSNSAccess",
+      "Effect": "Allow",
+      "Action": "sns:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "FullSQSAccess",
+      "Effect": "Allow",
+      "Action": "sqs:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "CloudWatchReadOnlyForMetrics",
+      "Effect": "Allow",
+      "Action": [
+        "cloudwatch:GetMetricData",
+        "cloudwatch:GetMetricStatistics",
+        "cloudwatch:ListMetrics",
+        "cloudwatch:DescribeAlarms",
+        "cloudwatch:DescribeAlarmsForMetric"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "KMSReadOnlyForSNSConsole",
+      "Effect": "Allow",
+      "Action": [
+        "kms:DescribeKey",
+        "kms:ListAliases",
+        "kms:ListKeys"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyUnrelatedServices",
+      "Effect": "Deny",
+      "Action": [
+        "ec2:*",
+        "s3:*",
+        "iam:*",
+        "lambda:*",
+        "rds:*",
+        "dynamodb:*",
+        "ecs:*",
+        "ecr:*",
+        "cloudformation:*",
+        "secretsmanager:*",
+        "route53:*",
+        "organizations:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
