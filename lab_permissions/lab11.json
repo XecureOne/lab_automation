@@ -1,0 +1,15 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ELBFullManagement",
+      "Effect": "Allow",
+      "Action": [
+        "elasticloadbalancing:*",
+        "ec2:*",
+        "s3:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

@@ -77,6 +77,22 @@ def inject_permissions(
         # )
     except ClientError as e:
         print(e)
+    
+
+    # iam.put_user_policy(
+    #     UserName=user_name,
+    #     PolicyName="DefaultIamPolicy",
+    #     PolicyDocument=json.dumps(load_permissions_from_s3("bsoft-aws-labs-880690594512-ap-south-1-an","lab0.json")).replace("__BOUNDARY_ARN__",f"arn:aws:iam::{account_id}:policy/CoderCreatedIdentityBoundary").replace("__POLICY_ARN__",f"arn:aws:iam::{account_id}:policy/DefaultIamPolicy"),
+    # )
+    # print("Iam Permissions Injected!!")
+    # log.info("Iam Permissions injected.")
+    # time.sleep(5)
+
+    iam.attach_user_policy(
+    UserName="Coder",
+    PolicyArn=f"arn:aws:iam::{account_id}:policy/DefaultIamPolicy"
+    )
+
 
     iam.put_user_policy(
         UserName=user_name,

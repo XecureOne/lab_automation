@@ -1,0 +1,17 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "LambdaTriggerManagement",
+      "Effect": "Allow",
+      "Action": [
+        "lambda:*",
+        "s3:*",
+        "sqs:*",
+        "events:*",
+        "logs:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

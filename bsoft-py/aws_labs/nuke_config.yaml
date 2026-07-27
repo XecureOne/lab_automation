@@ -3,11 +3,10 @@ regions:
   - global
 
 blocklist:
-  - "959782869917"  # Replace with your management account ID
+  - "880690594512"  # management account ID
 
 accounts:
   "070640552464":
-    alias: "lab-user02"
     filters:
       IAMRole:
         - "OrganizationAccountAccessRole"
@@ -16,3 +15,6 @@ accounts:
       IAMRolePolicy:
         - property: role
           value: "OrganizationAccountAccessRole"
+      IAMPolicy:
+        - "arn:aws:iam::070640552464:policy/CoderCreatedIdentityBoundary"
+        - "arn:aws:iam::070640552464:policy/DefaultIamPolicy"
