@@ -14,9 +14,9 @@ def fetch_account_id(student_id):
             res = json.loads(f.read())
             return res.get(student_id).get("account_id")
 
-<<<<<<< HEAD
-print(module.run_test_cases(_child_creds(fetch_account_id(student_id))))
-=======
+#<<<<<<< HEAD
+#print(module.run_test_cases(_child_creds(fetch_account_id(student_id))))
+#=======
 def start():
     student_id = input("Enter student id:")
     print(module.run_test_cases(_child_creds(fetch_account_id(student_id))))
@@ -26,4 +26,4 @@ def test(account_id):
 
 if __name__ == '__main__':
     start()
->>>>>>> 6c06db2 (iam issue cleared out)
+#>>>>>>> 6c06db2 (iam issue cleared out)
