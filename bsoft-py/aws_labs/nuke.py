@@ -17,11 +17,7 @@ def build_config(account_id: str, alias: str, output_path: str = "aws-nuke-final
   - global
 
 blocklist:
-<<<<<<< HEAD
   - "880690594512"  # management account ID
-=======
-  - "880690594512"  # Replace with your management account ID
->>>>>>> 3e683df (Version 1)
 
 accounts:
   "{account_id}":

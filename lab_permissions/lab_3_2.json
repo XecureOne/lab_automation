@@ -1,21 +1,11 @@
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "FullS3Access",
-      "Effect": "Allow",
-      "Action": "s3:*",
-      "Resource": "*"
-    },
-    {
-      "Sid": "DenyUnrelatedServices",
-      "Effect": "Deny",
-      "Action": [
-        "ec2:*", "iam:*", "lambda:*", "rds:*", "ecs:*", "ecr:*",
-        "cloudformation:*", "cloudwatch:*", "route53:*", "sns:*",
-        "sqs:*", "dynamodb:*", "secretsmanager:*", "organizations:*"
-      ],
-      "Resource": "*"
-    }
-  ]
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "FullS3Access",
+            "Effect": "Allow",
+            "Action": "s3:*",
+            "Resource": "*"
+        }
+    ]
 }

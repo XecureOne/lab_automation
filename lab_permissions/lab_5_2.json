@@ -14,6 +14,7 @@
         "cloudwatch:GetMetricData",
         "cloudwatch:GetMetricStatistics",
         "cloudwatch:ListMetrics",
+
         "cloudwatch:DescribeAlarms",
         "cloudwatch:DescribeAlarmsForMetric"
       ],
@@ -25,26 +26,6 @@
         "kms:DescribeKey",
         "kms:ListAliases",
         "kms:ListKeys"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Sid": "DenyUnrelatedServices",
-      "Effect": "Deny",
-      "Action": [
-        "ec2:*",
-        "s3:*",
-        "iam:*",
-        "lambda:*",
-        "sqs:*",
-        "rds:*",
-        "dynamodb:*",
-        "ecs:*",
-        "ecr:*",
-        "cloudformation:*",
-        "secretsmanager:*",
-        "route53:*",
-        "organizations:*"
       ],
       "Resource": "*"
     }

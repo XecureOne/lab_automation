@@ -1,28 +1,17 @@
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "FullEC2Access",
-      "Effect": "Allow",
-      "Action": "ec2:*",
-      "Resource": "*"
-    },
-    {
-      "Sid": "EC2InstanceConnect",
-      "Effect": "Allow",
-      "Action": "ec2-instance-connect:*",
-      "Resource": "*"
-    },
-    {
-      "Sid": "DenyUnrelatedServices",
-      "Effect": "Deny",
-      "Action": [
-        "s3:*", "iam:*", "lambda:*", "ecs:*", "ecr:*", "rds:*",
-        "dynamodb:*", "cloudformation:*", "cloudwatch:*", "route53:*",
-        "sns:*", "sqs:*", "secretsmanager:*", "kms:*", "acm:*",
-        "organizations:*", "autoscaling:*", "elasticloadbalancing:*"
-      ],
-      "Resource": "*"
-    }
-  ]
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "FullEC2Access",
+            "Effect": "Allow",
+            "Action": "ec2:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "EC2InstanceConnect",
+            "Effect": "Allow",
+            "Action": "ec2-instance-connect:*",
+            "Resource": "*"
+        }
+    ]
 }

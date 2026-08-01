@@ -1,22 +1,11 @@
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "FullEC2Access",
-      "Effect": "Allow",
-      "Action": "ec2:*",
-      "Resource": "*"
-    },
-    {
-      "Sid": "DenyUnrelatedServices",
-      "Effect": "Deny",
-      "Action": [
-        "s3:*", "iam:*", "lambda:*", "rds:*", "ecs:*", "ecr:*",
-        "cloudformation:*", "cloudwatch:*", "route53:*", "sns:*",
-        "sqs:*", "dynamodb:*", "secretsmanager:*", "kms:*", "acm:*",
-        "organizations:*"
-      ],
-      "Resource": "*"
-    }
-  ]
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "FullEC2Access",
+            "Effect": "Allow",
+            "Action": "ec2:*",
+            "Resource": "*"
+        }
+    ]
 }

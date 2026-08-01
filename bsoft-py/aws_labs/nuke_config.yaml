@@ -3,11 +3,7 @@ regions:
   - global
 
 blocklist:
-<<<<<<< HEAD
   - "880690594512"  # management account ID
-=======
-  - "880690594512"  # Replace with your management account ID
->>>>>>> 3e683df (Version 1)
 
 accounts:
   "070640552464":
