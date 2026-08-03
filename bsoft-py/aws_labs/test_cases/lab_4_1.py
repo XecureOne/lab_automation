@@ -38,12 +38,12 @@ def test_db_status(db):
 def test_db_engine(db):
     if not db:
         skip("RDS engine = MySQL")
-        skip("RDS engine version starts with '8.0'")
+        skip("RDS engine version starts with '8.4'")
         return
     engine  = db.get('Engine', '')
     version = db.get('EngineVersion', '')
     result(f"RDS engine = MySQL (got {engine})",     engine == 'mysql')
-    result(f"RDS engine version starts with '8.0'", version.startswith('8.0'))
+    result(f"RDS engine version starts with '8.4'", version.startswith('8.4'))
 
 def test_not_publicly_accessible(db):
     if not db:
