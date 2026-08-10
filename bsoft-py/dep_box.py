@@ -58,7 +58,7 @@ def retreive_stack(client):
     
 
 def deploy(student):
-    dat = library.start_instance("","room",student,"ami-083f389196406f0ca","GUI")
+    dat = library.start_instance("","room",student,"ami-083f389196406f0ca","GUI","t3.medium")
     if dat:
         client_ip = fetch_static_ip(student)
         print("Started AttackINstance!!!!!")

@@ -1,0 +1,122 @@
+{
+  "services": [
+    {
+      "service": "apigateway",
+      "status": "FAIL",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": "Service 'apigateway' is a placeholder and has not been implemented yet."
+    },
+    {
+      "service": "application_autoscaling",
+      "status": "FAIL",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": "Service 'application_autoscaling' is a placeholder and has not been implemented yet."
+    },
+    {
+      "service": "autoscaling",
+      "status": "FAIL",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": "Service 'autoscaling' is a placeholder and has not been implemented yet."
+    },
+    {
+      "service": "cloudformation",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "ec2",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "ecr",
+      "status": "FAIL",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": "Service 'ecr' is a placeholder and has not been implemented yet."
+    },
+    {
+      "service": "ecs",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "eks",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "elasticbeanstalk",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "elb",
+      "status": "FAIL",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": "Service 'elb' is a placeholder and has not been implemented yet."
+    },
+    {
+      "service": "eventbridge",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "iam",
+      "status": "FAIL",
+      "remaining_count": 4,
+      "remaining_resources": [
+        "role:aws-elasticbeanstalk-ec2-role",
+        "policy:DefaultIamPolicy",
+        "policy:CoderCreatedIdentityBoundary",
+        "instance_profile:aws-elasticbeanstalk-ec2-role"
+      ],
+      "error": ""
+    },
+    {
+      "service": "kms",
+      "status": "FAIL",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": "Service 'kms' is a placeholder and has not been implemented yet."
+    },
+    {
+      "service": "lambda",
+      "status": "FAIL",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": "Service 'lambda' is a placeholder and has not been implemented yet."
+    },
+    {
+      "service": "rds",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "s3",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    }
+  ],
+  "overall": "FAIL"
+}

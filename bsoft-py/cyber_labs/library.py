@@ -10,14 +10,20 @@ INSTANCE_TYPE = ""
 
 ec2 = boto3.client("ec2", region_name=REGION)
 
-def start_instance(lab, lab_type, student_id, image_id, inst_type):
+def start_instance(lab, lab_type, student_id, image_id, inst_type, tier):
     global INSTANCE_TYPE
-    INSTANCE_TYPE = "t3.micro" if inst_type=="CLI" else "t3.medium"
+    INSTANCE_TYPE = tier
     if INSTANCE_TYPE:
         pass 
     else:
         print("Invalid lab option!!")
         sys.exit(0)
+
+    LAB_SUBNETS = [
+        "subnet-07c48cdb471273634",
+        "subnet-0b2892fad459957a4",
+        "subnet-0a8911f4c52ccf505"
+    ]
 
 
     SUBNETS = [
@@ -27,7 +33,7 @@ def start_instance(lab, lab_type, student_id, image_id, inst_type):
     ]
 
     # Pick one subnet randomly
-    selected_subnet = random.choice(SUBNETS) if lab_type == "room" else SUBNET_ID
+    selected_subnet = random.choice(SUBNETS) if lab_type == "room" else random.choice(LAB_SUBNETS)
     # selected_subnet = random.choice(SUBNETS)
     
     try:

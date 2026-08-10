@@ -48,19 +48,31 @@ def fetch_static_ip(student_id):
         if res:
             return res
 
+def get_lab_details(lab_id):
+    with open("./labs.json","r") as f:
+        res = json.load(f).get(lab_id)
+        if res:
+            return res
+
 def start_lab():
     lab_id = input("Enter the lab id: ")
-    lab_type = input("Enter the lab type: ")
-    image_file = fetch_lab_file(lab_id)
-    image_id = fetch_lab_image(lab_type)
-    dat = library.start_instance(image_file,"lab",student_id,image_id,lab_type)
-    ip = fetch_static_ip(student_id)
-    if dat:
-        store(lab_id,dat["instance_id"])
-        # time.sleep(120)
-        # library.exec_lab_file(image_file,dat["instance_id"])
-        assign2sg.add_security_group_rules(dat["sg_id"],ip)
-        remote.send_uni_add(dat.get("ip"), ip)
+    lab_details = get_lab_details(lab_id)
+    lab_class = lab_details["class"]
+    print(lab_details)
+    print(lab_class)
+    if (lab_class == "bash" or lab_class == "ami"):
+        lab_type = lab_details["type"]
+        image_file = fetch_lab_file(lab_id) if lab_class=="bash" else ""
+        image_id = fetch_lab_image(lab_type) if lab_class=="bash" else lab_details["id"]
+        tier = lab_details["tier"]
+        dat = library.start_instance(image_file,"lab",student_id,image_id,lab_type,tier)
+        ip = fetch_static_ip(student_id)
+        if dat:
+            store(lab_id,dat["instance_id"])
+            # time.sleep(120)
+            # library.exec_lab_file(image_file,dat["instance_id"])
+            assign2sg.add_security_group_rules(dat["sg_id"],ip)
+            remote.send_uni_add(dat.get("ip"), ip)
 
 def stop_lab():
     inst_id = fetch_instance_id(student_id)

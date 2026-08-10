@@ -4,6 +4,10 @@ import logging
 import argparse
 import os
 import boto3
+import json
+
+sys.path.append(os.path.abspath("./cleanup-engine/"))
+from cleanup_engine import cleanup_account
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
@@ -119,18 +123,37 @@ def test_run(config_path: str,creds: dict , dry_run: bool = False, profile: str 
         sys.exit(1)
 
 
-def nuke(account_id,account_alias,creds):
-    build_config(
-        account_id=account_id,
-        alias=account_alias,
-        output_path="nuke_config.yaml"
-    )
-    run_aws_nuke(
-        config_path="nuke_config.yaml",
-        creds=creds
-    )
+def nuke(account_id):
+    # build_config(
+    #     account_id=account_id,
+    #     alias=account_alias,
+    #     output_path="nuke_config.yaml"
+    # )
+    # run_aws_nuke(
+    #     config_path="nuke_config.yaml",
+    #     creds=creds,
+    #     dry_run=True
+    # )
     # test_run(
     #     config_path="nuke_config.yaml",
     #     creds=creds,
     #     dry_run=True
     # )
+    result = cleanup_account(account_id)
+
+    if result["reusable"]:
+        # return account to sandbox pool
+        print(f"[**][**]Account {account_id} wiped out clean!!")
+    else:
+        # quarantine account
+
+        with open("./blocklist.json", "r") as f:
+            res = json.load(f)
+
+        res["quarantined"].append(account_id)
+
+        print(f"Appended {account_id} to blocklist!!")
+
+        with open("./blocklist.json", "w") as f:
+            json.dump(res, f, indent=4)
+        print(f"[!!][!!]Failed to delete resources in Account {account_id}...quarantined!!")

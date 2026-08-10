@@ -1,0 +1,112 @@
+{
+  "services": [
+    {
+      "service": "apigateway",
+      "resource_count": 0,
+      "resources": [],
+      "error": ""
+    },
+    {
+      "service": "application-autoscaling",
+      "resource_count": 0,
+      "resources": [],
+      "error": ""
+    },
+    {
+      "service": "autoscaling",
+      "resource_count": 0,
+      "resources": [],
+      "error": ""
+    },
+    {
+      "service": "cloudformation",
+      "resource_count": 0,
+      "resources": [],
+      "error": ""
+    },
+    {
+      "service": "ec2",
+      "resource_count": 0,
+      "resources": [],
+      "error": ""
+    },
+    {
+      "service": "ecr",
+      "resource_count": 0,
+      "resources": [],
+      "error": ""
+    },
+    {
+      "service": "ecs",
+      "resource_count": 0,
+      "resources": [],
+      "error": ""
+    },
+    {
+      "service": "eks",
+      "resource_count": 0,
+      "resources": [],
+      "error": ""
+    },
+    {
+      "service": "elasticbeanstalk",
+      "resource_count": 0,
+      "resources": [],
+      "error": ""
+    },
+    {
+      "service": "elb",
+      "resource_count": 0,
+      "resources": [],
+      "error": ""
+    },
+    {
+      "service": "eventbridge",
+      "resource_count": 0,
+      "resources": [],
+      "error": ""
+    },
+    {
+      "service": "iam",
+      "resource_count": 1,
+      "resources": [
+        {
+          "id": "Coder",
+          "name": "Coder",
+          "arn": "arn:aws:iam::070640552464:user/Coder",
+          "metadata": {
+            "type": "user",
+            "tags": {}
+          },
+          "fingerprint": "2026-08-10 21:39:41+00:00"
+        }
+      ],
+      "error": ""
+    },
+    {
+      "service": "kms",
+      "resource_count": 0,
+      "resources": [],
+      "error": ""
+    },
+    {
+      "service": "lambda",
+      "resource_count": 0,
+      "resources": [],
+      "error": ""
+    },
+    {
+      "service": "rds",
+      "resource_count": 0,
+      "resources": [],
+      "error": ""
+    },
+    {
+      "service": "s3",
+      "resource_count": 0,
+      "resources": [],
+      "error": ""
+    }
+  ],
+  "total_resources": 1
+}

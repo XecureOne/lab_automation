@@ -1,0 +1,251 @@
+{
+  "account_id": "070640552464",
+  "region": "us-east-1",
+  "start_time": "2026-08-10T19:44:25.436344+00:00",
+  "end_time": "2026-08-10T19:44:25.436374+00:00",
+  "elapsed_seconds": 0.0,
+  "dry_run": true,
+  "resources_discovered": 5,
+  "resources_deleted": 0,
+  "resources_failed": 0,
+  "resources_remaining": 5,
+  "success_percentage": 0.0,
+  "overall_verification": "FAIL",
+  "remaining_resources": [
+    {
+      "service": "iam",
+      "resource": "policy:DefaultIamPolicy",
+      "verification_error": ""
+    },
+    {
+      "service": "iam",
+      "resource": "policy:CoderCreatedIdentityBoundary",
+      "verification_error": ""
+    },
+    {
+      "service": "iam",
+      "resource": "user:Coder",
+      "verification_error": ""
+    },
+    {
+      "service": "rds",
+      "resource": "database-1",
+      "verification_error": ""
+    },
+    {
+      "service": "rds",
+      "resource": "database-1-instance-1",
+      "verification_error": ""
+    }
+  ],
+  "per_service": {
+    "apigateway": {
+      "discovered": 0,
+      "deleted": 0,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 0.0,
+      "verification_status": "PASS",
+      "remaining": 0,
+      "remaining_resources": [],
+      "verification_error": "",
+      "errors": []
+    },
+    "application-autoscaling": {
+      "discovered": 0,
+      "deleted": 0,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 0.0,
+      "verification_status": "PASS",
+      "remaining": 0,
+      "remaining_resources": [],
+      "verification_error": "",
+      "errors": []
+    },
+    "autoscaling": {
+      "discovered": 0,
+      "deleted": 0,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 0.0,
+      "verification_status": "PASS",
+      "remaining": 0,
+      "remaining_resources": [],
+      "verification_error": "",
+      "errors": []
+    },
+    "cloudformation": {
+      "discovered": 0,
+      "deleted": 0,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 0.0,
+      "verification_status": "PASS",
+      "remaining": 0,
+      "remaining_resources": [],
+      "verification_error": "",
+      "errors": []
+    },
+    "ec2": {
+      "discovered": 0,
+      "deleted": 0,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 0.0,
+      "verification_status": "PASS",
+      "remaining": 0,
+      "remaining_resources": [],
+      "verification_error": "",
+      "errors": []
+    },
+    "ecr": {
+      "discovered": 0,
+      "deleted": 0,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 0.0,
+      "verification_status": "PASS",
+      "remaining": 0,
+      "remaining_resources": [],
+      "verification_error": "",
+      "errors": []
+    },
+    "ecs": {
+      "discovered": 0,
+      "deleted": 0,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 0.0,
+      "verification_status": "PASS",
+      "remaining": 0,
+      "remaining_resources": [],
+      "verification_error": "",
+      "errors": []
+    },
+    "eks": {
+      "discovered": 0,
+      "deleted": 0,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 0.0,
+      "verification_status": "PASS",
+      "remaining": 0,
+      "remaining_resources": [],
+      "verification_error": "",
+      "errors": []
+    },
+    "elasticbeanstalk": {
+      "discovered": 0,
+      "deleted": 0,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 0.0,
+      "verification_status": "PASS",
+      "remaining": 0,
+      "remaining_resources": [],
+      "verification_error": "",
+      "errors": []
+    },
+    "elb": {
+      "discovered": 0,
+      "deleted": 0,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 0.0,
+      "verification_status": "PASS",
+      "remaining": 0,
+      "remaining_resources": [],
+      "verification_error": "",
+      "errors": []
+    },
+    "eventbridge": {
+      "discovered": 0,
+      "deleted": 0,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 0.0,
+      "verification_status": "PASS",
+      "remaining": 0,
+      "remaining_resources": [],
+      "verification_error": "",
+      "errors": []
+    },
+    "iam": {
+      "discovered": 3,
+      "deleted": 0,
+      "failed": 0,
+      "skipped": 3,
+      "duration_seconds": 0.0,
+      "verification_status": "FAIL",
+      "remaining": 3,
+      "remaining_resources": [
+        "policy:DefaultIamPolicy",
+        "policy:CoderCreatedIdentityBoundary",
+        "user:Coder"
+      ],
+      "verification_error": "",
+      "errors": []
+    },
+    "kms": {
+      "discovered": 0,
+      "deleted": 0,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 0.0,
+      "verification_status": "PASS",
+      "remaining": 0,
+      "remaining_resources": [],
+      "verification_error": "",
+      "errors": []
+    },
+    "lambda": {
+      "discovered": 0,
+      "deleted": 0,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 0.0,
+      "verification_status": "PASS",
+      "remaining": 0,
+      "remaining_resources": [],
+      "verification_error": "",
+      "errors": []
+    },
+    "rds": {
+      "discovered": 2,
+      "deleted": 0,
+      "failed": 0,
+      "skipped": 2,
+      "duration_seconds": 0.0,
+      "verification_status": "FAIL",
+      "remaining": 2,
+      "remaining_resources": [
+        "database-1",
+        "database-1-instance-1"
+      ],
+      "verification_error": "",
+      "errors": []
+    },
+    "s3": {
+      "discovered": 0,
+      "deleted": 0,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 0.0,
+      "verification_status": "PASS",
+      "remaining": 0,
+      "remaining_resources": [],
+      "verification_error": "",
+      "errors": []
+    }
+  },
+  "pre_nuke_verification": "FAIL",
+  "aws_nuke": {
+    "enabled": false,
+    "executed": false,
+    "success": null,
+    "return_code": null,
+    "timed_out": false
+  },
+  "final_verification": "FAIL"
+}

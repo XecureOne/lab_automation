@@ -29,11 +29,13 @@ def list_active_accounts():
         return res
 
 def find_first_active_account(active_accounts):
+    with open("./blocklist.json",'r') as f:
+        blocklist = json.load(f)["quarantined"]
     with open("../sample.json","r") as f:
         res = json.loads(f.read())
     print(res.values())
     for i in active_accounts:
-        if i not in [ j.get("account_id") for j in res.values()]:
+        if (i not in [ j.get("account_id") for j in res.values()]) and (i not in blocklist):
             print(f"Found the first active account!! {i}")
             return i
 
@@ -72,7 +74,7 @@ def del_lab():
     )
     alias = fetch_account_alias(account_id)
     creds = _assume_child_role(account_id,_assume_child_role("880690594512",{},"rt_provider_core_backend"))
-    nuke.nuke(account_id,alias,creds)
+    nuke.nuke(account_id)
     detach_student()
 
 if __name__ == '__main__':
