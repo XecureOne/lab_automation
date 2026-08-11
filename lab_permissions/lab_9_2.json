@@ -1,0 +1,26 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ECSClusterAndService",
+      "Effect": "Allow",
+      "Action": [
+        "ecs:*",
+        "application-autoscaling:*",
+        "elasticloadbalancing:*",
+        "ecr:*",
+        "ec2:*",
+        "cloudwatch:*",
+        "logs:*",
+        "cloudformation:CreateStack",
+        "cloudformation:DescribeStacks",
+        "cloudformation:DescribeStackEvents",
+        "cloudformation:DescribeStackResources",
+        "cloudformation:GetTemplate",
+        "cloudformation:UpdateStack",
+        "cloudformation:DeleteStack"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

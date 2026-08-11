@@ -1,3 +1,5 @@
+import time
+
 import boto3
 from botocore.exceptions import ClientError
 from role_credentials import _child_creds
@@ -46,7 +48,7 @@ def create_iam_boundary(iam):
 
 def create_iam_policy(iam,account_id):
     policy_document = ''
-    with open('/home/carpediem/bsoft/lab_permissions/lab0.json','r') as f:
+    with open('../../lab_permissions/lab0.json','r') as f:
         policy_document = json.load(f)
 
     policy_document = json.dumps(policy_document).replace("__BOUNDARY_ARN__",f"arn:aws:iam::{account_id}:policy/CoderCreatedIdentityBoundary")
@@ -67,6 +69,45 @@ def create_iam_policy(iam,account_id):
             print(f"Policy already exists.")
         else:
             raise
+
+def delete_iam_boundary(iam,account_id):
+
+    policy_arn = f"arn:aws:iam::{account_id}:policy/CoderCreatedIdentityBoundary"
+    versions = iam.list_policy_versions(
+    PolicyArn=policy_arn
+    )["Versions"]
+
+    for version in versions:
+        if not version["IsDefaultVersion"]:
+            iam.delete_policy_version(
+                PolicyArn=policy_arn,
+                VersionId=version["VersionId"]
+            )
+    iam.delete_policy(
+        PolicyArn=policy_arn
+        )
+
+def delete_iam_policy(iam,account_id):
+    
+    policy_arn = f"arn:aws:iam::{account_id}:policy/DefaultIamPolicy"
+    versions = iam.list_policy_versions(
+    PolicyArn=policy_arn
+    )["Versions"]
+
+    for version in versions:
+        if not version["IsDefaultVersion"]:
+            iam.delete_policy_version(
+                PolicyArn=policy_arn,
+                VersionId=version["VersionId"]
+            )
+
+    iam.delete_policy(
+    PolicyArn=policy_arn
+    )
+
+    print(f"Policy deleted successfully! {account_id}")
+
+
 
 def create_aws_account_alias(alias: str,iam_client):
     """
@@ -121,6 +162,9 @@ if __name__ == "__main__":
         # create_iam_user("Coder",client)
         # create_aws_account_alias(i[1],client)
         # create_iam_policy(client,i[0])
-        full_cleanup(i[0],credentials)
+        # full_cleanup(i[0],credentials)
+        delete_iam_policy(client,i[0])
+        time.sleep(5)
+        create_iam_policy(client,i[0])
 
     

@@ -1,23 +1,11 @@
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "BoundaryAllowEverythingElse",
-      "Effect": "Allow",
-      "Action": "*",
-      "Resource": "*"
-    },
-    {
-      "Sid": "BoundaryDenyIAM",
-      "Effect": "Deny",
-      "Action": "iam:*",
-      "Resource": "*"
-    },
-    {
-      "Sid": "BoundaryDenyOrganizations",
-      "Effect": "Deny",
-      "Action": "organizations:*",
-      "Resource": "*"
-    }
-  ]
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "BoundaryAllowEverythingElse",
+            "Effect": "Allow",
+            "Action": "*",
+            "Resource": "*"
+        }
+    ]
 }
