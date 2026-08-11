@@ -1,0 +1,56 @@
+# AWS Cleanup Tool configuration
+regions:
+  - ap-south-1          # or explicit list: [us-east-1, eu-west-1]
+
+exclude_services:
+  - organizations       # read-only warnings only, never deleted
+
+include_services: []    # if non-empty, ONLY these services are touched
+
+exclude_tags:
+  - Keep                # any resource carrying this tag key is skipped
+
+protected_resource_arns: []
+
+protected_iam_policy_names:
+  - CoderCreatedIdentityBoundary
+  - DefaultIamPolicy
+
+parallel_workers: 20
+retry_attempts: 5
+retry_base_delay_seconds: 2.0
+retry_max_delay_seconds: 60.0
+
+force_disable_protection: true
+kms_pending_window_days: 7
+
+dry_run: false
+require_confirmation_phrase: "DELETE ACCOUNT"
+
+checkpoint_db: logs/checkpoint.sqlite3
+report_dir: logs/reports
+
+max_verification_passes: 5
+
+assume_role:
+  role_name: OrganizationAccountAccessRole
+  external_id: null
+
+aws_nuke:
+  enabled: true
+  binary: aws-nuke
+  config_file: nuke-config.yaml
+  timeout_seconds: 3600
+  max_retries: 2
+
+# --- operational defaults not part of the day-to-day schema above ---
+aws_profile: null
+retain_final_snapshot: false
+s3_scope_current_region_only: true
+botocore_max_attempts: 3
+connect_timeout_seconds: 10
+read_timeout_seconds: 30
+waiter_default_timeout_seconds: 1800
+waiter_default_interval_seconds: 15
+log_level: INFO
+log_file: logs/cleanup_engine.log

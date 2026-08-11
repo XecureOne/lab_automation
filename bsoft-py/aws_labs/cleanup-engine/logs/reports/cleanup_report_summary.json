@@ -1,0 +1,190 @@
+{
+  "runs": [
+    {
+      "account_id": "070640552464",
+      "region": "ap-south-1",
+      "start_time": "2026-08-10T11:25:12.378657+00:00",
+      "end_time": "2026-08-10T11:25:12.378694+00:00",
+      "elapsed_seconds": 0.0,
+      "dry_run": false,
+      "resources_discovered": 0,
+      "resources_deleted": 0,
+      "resources_failed": 0,
+      "resources_remaining": 0,
+      "success_percentage": 100.0,
+      "overall_verification": "PASS",
+      "per_service": {
+        "apigateway": {
+          "discovered": 0,
+          "deleted": 0,
+          "failed": 0,
+          "skipped": 0,
+          "duration_seconds": 0.0,
+          "verification_status": "PASS",
+          "remaining": 0,
+          "errors": []
+        },
+        "application-autoscaling": {
+          "discovered": 0,
+          "deleted": 0,
+          "failed": 0,
+          "skipped": 0,
+          "duration_seconds": 0.0,
+          "verification_status": "PASS",
+          "remaining": 0,
+          "errors": []
+        },
+        "autoscaling": {
+          "discovered": 0,
+          "deleted": 0,
+          "failed": 0,
+          "skipped": 0,
+          "duration_seconds": 0.0,
+          "verification_status": "PASS",
+          "remaining": 0,
+          "errors": []
+        },
+        "cloudformation": {
+          "discovered": 0,
+          "deleted": 0,
+          "failed": 0,
+          "skipped": 0,
+          "duration_seconds": 0.0,
+          "verification_status": "PASS",
+          "remaining": 0,
+          "errors": []
+        },
+        "ec2": {
+          "discovered": 0,
+          "deleted": 0,
+          "failed": 0,
+          "skipped": 0,
+          "duration_seconds": 0.0,
+          "verification_status": "PASS",
+          "remaining": 0,
+          "errors": []
+        },
+        "ecr": {
+          "discovered": 0,
+          "deleted": 0,
+          "failed": 0,
+          "skipped": 0,
+          "duration_seconds": 0.0,
+          "verification_status": "PASS",
+          "remaining": 0,
+          "errors": []
+        },
+        "ecs": {
+          "discovered": 0,
+          "deleted": 0,
+          "failed": 0,
+          "skipped": 0,
+          "duration_seconds": 0.0,
+          "verification_status": "PASS",
+          "remaining": 0,
+          "errors": []
+        },
+        "eks": {
+          "discovered": 0,
+          "deleted": 0,
+          "failed": 0,
+          "skipped": 0,
+          "duration_seconds": 0.0,
+          "verification_status": "PASS",
+          "remaining": 0,
+          "errors": []
+        },
+        "elasticbeanstalk": {
+          "discovered": 0,
+          "deleted": 0,
+          "failed": 0,
+          "skipped": 0,
+          "duration_seconds": 0.0,
+          "verification_status": "PASS",
+          "remaining": 0,
+          "errors": []
+        },
+        "elb": {
+          "discovered": 0,
+          "deleted": 0,
+          "failed": 0,
+          "skipped": 0,
+          "duration_seconds": 0.0,
+          "verification_status": "PASS",
+          "remaining": 0,
+          "errors": []
+        },
+        "eventbridge": {
+          "discovered": 0,
+          "deleted": 0,
+          "failed": 0,
+          "skipped": 0,
+          "duration_seconds": 0.0,
+          "verification_status": "PASS",
+          "remaining": 0,
+          "errors": []
+        },
+        "iam": {
+          "discovered": 0,
+          "deleted": 0,
+          "failed": 0,
+          "skipped": 0,
+          "duration_seconds": 0.0,
+          "verification_status": "PASS",
+          "remaining": 0,
+          "errors": []
+        },
+        "kms": {
+          "discovered": 0,
+          "deleted": 0,
+          "failed": 0,
+          "skipped": 0,
+          "duration_seconds": 0.0,
+          "verification_status": "PASS",
+          "remaining": 0,
+          "errors": []
+        },
+        "lambda": {
+          "discovered": 0,
+          "deleted": 0,
+          "failed": 0,
+          "skipped": 0,
+          "duration_seconds": 0.0,
+          "verification_status": "PASS",
+          "remaining": 0,
+          "errors": []
+        },
+        "rds": {
+          "discovered": 0,
+          "deleted": 0,
+          "failed": 0,
+          "skipped": 0,
+          "duration_seconds": 0.0,
+          "verification_status": "PASS",
+          "remaining": 0,
+          "errors": []
+        },
+        "s3": {
+          "discovered": 0,
+          "deleted": 0,
+          "failed": 0,
+          "skipped": 0,
+          "duration_seconds": 0.0,
+          "verification_status": "PASS",
+          "remaining": 0,
+          "errors": []
+        }
+      },
+      "pre_nuke_verification": "PASS",
+      "aws_nuke": {
+        "enabled": true,
+        "executed": true,
+        "success": true,
+        "return_code": 0,
+        "timed_out": false
+      },
+      "final_verification": "PASS"
+    }
+  ],
+  "overall": "PASS"
+}

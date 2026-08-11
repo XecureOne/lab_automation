@@ -1,0 +1,21 @@
+{
+    "lab1":{
+        "class":"bash",
+        "type":"CLI",
+        "tier":"t3.micro"
+    },
+    "lab2":{
+        "class":"ami",
+        "type":"CLI",
+        "tier":"t3.micro",
+        "id":"ami-0d730af7e12bb5135"
+    },
+    "lab3":{
+        "class":"web"
+    },
+    "lab4":{
+        "class":"bash",
+        "type":"GUI",
+        "tier":"t3.micro"
+    }
+}

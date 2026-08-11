@@ -1,0 +1,24 @@
+regions:
+  - ap-south-1
+  - global
+
+blocklist:
+  - "880690594512"
+
+accounts:
+  "070640552464":
+    filters:
+
+      IAMRole:
+        - "OrganizationAccountAccessRole"
+
+      IAMRolePolicyAttachment:
+        - "OrganizationAccountAccessRole -> AdministratorAccess"
+
+      IAMRolePolicy:
+        - property: role
+          value: "OrganizationAccountAccessRole"
+
+      IAMPolicy:
+          - "arn:aws:iam::070640552464:policy/CoderCreatedIdentityBoundary"
+          - "arn:aws:iam::070640552464:policy/DefaultIamPolicy"

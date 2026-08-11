@@ -1,0 +1,117 @@
+{
+  "services": [
+    {
+      "service": "apigateway",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "application-autoscaling",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "autoscaling",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "cloudformation",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "ec2",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "ecr",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "ecs",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "eks",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "elasticbeanstalk",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "elb",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "eventbridge",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "iam",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "kms",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "lambda",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "rds",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    },
+    {
+      "service": "s3",
+      "status": "PASS",
+      "remaining_count": 0,
+      "remaining_resources": [],
+      "error": ""
+    }
+  ],
+  "overall": "PASS"
+}
