@@ -5,6 +5,22 @@ import sys
 from typing import Optional
 
 _STAGE_WIDTH = 10
+_CONTEXT = ""
+
+
+def set_log_context(**fields) -> None:
+    global _CONTEXT
+    parts = [
+        f"{key}={value}"
+        for key, value in fields.items()
+        if value is not None
+    ]
+    _CONTEXT = " ".join(parts)
+
+
+def clear_log_context() -> None:
+    global _CONTEXT
+    _CONTEXT = ""
 
 
 def setup_logging(log_level: str = "INFO", log_file: Optional[str] = None) -> None:
@@ -40,9 +56,14 @@ class StageLogger:
     def __init__(self, logger: logging.Logger):
         self._logger = logger
 
+    def _with_context(self, message: str) -> str:
+        if not _CONTEXT:
+            return message
+        return f"{_CONTEXT} {message}"
+
     def _emit(self, stage: str, message: str, level: int = logging.INFO) -> None:
         tag = f"[{stage.upper()}]".ljust(_STAGE_WIDTH + 2)
-        self._logger.log(level, f"{tag}{message}")
+        self._logger.log(level, self._with_context(f"{tag}{message}"))
 
     def discover(self, message: str) -> None:
         self._emit("discover", message)
@@ -60,7 +81,7 @@ class StageLogger:
         self._emit("report", message)
 
     def info(self, message: str) -> None:
-        self._logger.info(message)
+        self._logger.info(self._with_context(message))
 
     def warning(self, message: str) -> None:
         self._emit("warn", message, logging.WARNING)
@@ -69,4 +90,4 @@ class StageLogger:
         self._emit("error", message, logging.ERROR)
 
     def debug(self, message: str) -> None:
-        self._logger.debug(message)
+        self._logger.debug(self._with_context(message))

@@ -7,7 +7,7 @@ from nuke_config import MANAGEMENT_ACCOUNT_ID, build_nuke_config
 from nuke_config import build_nuke_config
 from base.aws_client import build_assumed_session
 from config import EngineConfig
-from logger import get_logger, setup_logging
+from logger import clear_log_context, get_logger, set_log_context, setup_logging
 from orchestrator import Orchestrator
 from utils import ensure_dir, write_json
 
@@ -44,6 +44,7 @@ def cleanup_account(
     account_id: str,
     config_path: str = "config.yaml",
     dry_run: Optional[bool] = None,
+    student_id: Optional[str] = None,
 ) -> dict:
     """
     Run the complete cleanup pipeline for exactly one AWS sandbox account.
@@ -75,172 +76,173 @@ def cleanup_account(
         config.log_level,
         config.log_file,
     )
+    set_log_context(student_id=student_id, account_id=account_id)
 
     logger = get_logger("cleanup_engine")
 
     role_name = config.assume_role.role_name
     external_id = config.assume_role.external_id
 
-    logger.info(
-        f"Attempting to acquire cleanup lock for account {account_id}"
-    )
-
-    with AccountCleanupLock(account_id):
+    try:
         logger.info(
-            f"Cleanup lock acquired for account {account_id}"
+            f"Attempting to acquire cleanup lock for account {account_id}"
         )
 
-        logger.info("=" * 70)
-        logger.info(
-            f"Starting cleanup for account {account_id}"
-        )
-        logger.info(
-        f"Role: {role_name}"
-    )
-        logger.info(
-            f"Regions: {', '.join(config.regions)}"
-        )
-        logger.info(
-            f"Dry run: {config.dry_run}"
-        )
-        logger.info("=" * 70)
-
-        reports = []
-        overall_ok = True
-        failed_regions = []
-
-        nuke_config_file = build_nuke_config(account_id)
-
-        logger.info(
-            f"Generated aws-nuke config: {nuke_config_file}"
-        )
-
-        for region in config.regions:
+        with AccountCleanupLock(account_id):
             logger.info(
-                f"--- Account {account_id} / region {region} ---"
+                f"Cleanup lock acquired for account {account_id}"
             )
 
-            try:
-                session = build_assumed_session(
-                    account_id,
-                    role_name,
-                    region,
-                    external_id,
+            logger.info(
+                f"Starting cleanup for account {account_id}"
+            )
+            logger.info(
+                f"Role: {role_name}"
+            )
+            logger.info(
+                f"Regions: {', '.join(config.regions)}"
+            )
+            logger.info(
+                f"Dry run: {config.dry_run}"
+            )
+
+            reports = []
+            overall_ok = True
+            failed_regions = []
+
+            nuke_config_file = build_nuke_config(account_id)
+
+            logger.info(
+                f"Generated aws-nuke config: {nuke_config_file}"
+            )
+
+            for region in config.regions:
+                logger.info(
+                    f"Account {account_id} / region {region}"
                 )
 
-                # Safety boundary:
-                # never clean unless STS confirms the requested account.
-                actual_account_id = (
-                    session.client("sts")
-                    .get_caller_identity()["Account"]
-                )
-
-                if actual_account_id != account_id:
-                    raise RuntimeError(
-                        "Account safety check failed: "
-                        f"requested={account_id}, "
-                        f"assumed={actual_account_id}"
+                try:
+                    session = build_assumed_session(
+                        account_id,
+                        role_name,
+                        region,
+                        external_id,
                     )
 
-                logger.info(
-                    f"STS account verification passed: "
-                    f"{actual_account_id}"
-                )
+                    # Safety boundary:
+                    # never clean unless STS confirms the requested account.
+                    actual_account_id = (
+                        session.client("sts")
+                        .get_caller_identity()["Account"]
+                    )
 
-                report = _run_one(
-                    config,
-                    region,
-                    account_id,
-                    session,
-                    nuke_config_file,
-                )
+                    if actual_account_id != account_id:
+                        raise RuntimeError(
+                            "Account safety check failed: "
+                            f"requested={account_id}, "
+                            f"assumed={actual_account_id}"
+                        )
 
-                reports.append(report)
+                    logger.info(
+                        f"STS account verification passed: "
+                        f"{actual_account_id}"
+                    )
 
-                if (
-                    report.get("overall_verification")
-                    != "PASS"
-                ):
+                    report = _run_one(
+                        config,
+                        region,
+                        account_id,
+                        session,
+                        nuke_config_file,
+                    )
+
+                    reports.append(report)
+
+                    if (
+                        report.get("overall_verification")
+                        != "PASS"
+                    ):
+                        overall_ok = False
+                        failed_regions.append(region)
+
+                except Exception as exc:  # noqa: BLE001
+                    logger.error(
+                        f"Cleanup failed for account "
+                        f"{account_id} / region {region}: {exc}"
+                    )
+
                     overall_ok = False
                     failed_regions.append(region)
 
-            except Exception as exc:  # noqa: BLE001
-                logger.error(
-                    f"Cleanup failed for account "
-                    f"{account_id} / region {region}: {exc}"
-                )
+            remaining_resources = []
 
-                overall_ok = False
-                failed_regions.append(region)
+            for report in reports:
+                for resource in report.get(
+                    "remaining_resources",
+                    [],
+                ):
+                    remaining_resources.append(
+                        {
+                            "region": report.get("region"),
+                            **resource,
+                        }
+                    )
 
-        remaining_resources = []
+            status = (
+                "PASS"
+                if overall_ok
+                else "FAIL"
+            )
 
-        for report in reports:
-            for resource in report.get(
-                "remaining_resources",
-                [],
-            ):
-                remaining_resources.append(
-                    {
-                        "region": report.get("region"),
-                        **resource,
-                    }
-                )
+            summary = {
+                "account_id": account_id,
+                "student_id": student_id,
+                "status": status,
+                "reusable": overall_ok,
 
-        status = (
-            "PASS"
-            if overall_ok
-            else "FAIL"
-        )
+                "regions": {
+                    report["region"]:
+                        report["overall_verification"]
+                    for report in reports
+                },
 
-        summary = {
-            "account_id": account_id,
-            "status": status,
-            "reusable": overall_ok,
+                "failed_regions": failed_regions,
 
-            "regions": {
-                report["region"]:
-                    report["overall_verification"]
-                for report in reports
-            },
+                "remaining_resources":
+                    remaining_resources,
 
-            "failed_regions": failed_regions,
+                "runs": reports,
+            }
 
-            "remaining_resources":
-                remaining_resources,
+            account_report_dir = (
+                f"{config.report_dir}/{account_id}"
+            )
 
-            "runs": reports,
-        }
+            ensure_dir(account_report_dir)
 
-        account_report_dir = (
-            f"{config.report_dir}/{account_id}"
-        )
+            summary_path = (
+                f"{account_report_dir}/"
+                "cleanup_report_summary.json"
+            )
 
-        ensure_dir(account_report_dir)
+            write_json(
+                summary_path,
+                summary,
+            )
 
-        summary_path = (
-            f"{account_report_dir}/"
-            "cleanup_report_summary.json"
-        )
+            summary["report_path"] = summary_path
 
-        write_json(
-            summary_path,
-            summary,
-        )
+            logger.info(
+                f"Account cleanup result: {status}"
+            )
+            logger.info(
+                f"Reusable: {overall_ok}"
+            )
+            logger.info(
+                f"Remaining resources: "
+                f"{len(remaining_resources)}"
+            )
 
-        summary["report_path"] = summary_path
-
-        logger.info("=" * 70)
-        logger.info(
-            f"Account cleanup result: {status}"
-        )
-        logger.info(
-            f"Reusable: {overall_ok}"
-        )
-        logger.info(
-            f"Remaining resources: "
-            f"{len(remaining_resources)}"
-        )
-        logger.info("=" * 70)
-
-        return summary
+            return summary
+    finally:
+        clear_log_context()

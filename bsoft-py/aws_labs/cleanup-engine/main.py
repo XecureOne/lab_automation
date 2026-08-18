@@ -28,6 +28,12 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
     )
 
+    parser.add_argument(
+        "--student-id",
+        default=None,
+        help="Optional student identifier to include in cleanup logs",
+    )
+
     return parser.parse_args()
 
 
@@ -39,6 +45,7 @@ def main() -> int:
             account_id=args.account_id,
             config_path=args.config,
             dry_run=True if args.dry_run else None,
+            student_id=args.student_id,
         )
 
     except Exception as exc:  # noqa: BLE001

@@ -1,0 +1,240 @@
+2026-08-18 22:52:53,333 - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+Enter lab id: lab1
+Enter student id: student01
+Start(S) or Stop(T):S
+2026-08-18 22:53:02,903 - INFO - Starting lab allocation lab_id=lab1 student_id=student01
+2026-08-18 22:53:02,903 - INFO - Listing active AWS Organizations accounts
+[INFO] Active accounts listed: 9
+2026-08-18 22:53:04,253 - INFO - Listed 9 active AWS Organizations accounts
+2026-08-18 22:53:04,253 - INFO - Selecting first unallocated active account
+[OK] Selected account: 070640552464
+2026-08-18 22:53:04,254 - INFO - Selected account_id=070640552464 for allocation
+2026-08-18 22:53:04,254 - INFO - Appending lab allocation student_id=student01 lab_id=lab1 account_id=070640552464
+[OK] Allocated account 070640552464 to student student01
+2026-08-18 22:53:04,254 - INFO - Allocation persisted student_id=student01 lab_id=lab1 account_id=070640552464
+2026-08-18 22:53:04,254 - INFO - Resolving account for student_id=student01
+2026-08-18 22:53:04,255 - INFO - Resolved student_id=student01 to account_id=070640552464
+2026-08-18 22:53:04,255 - INFO - Triggering access for lab_id=lab1 student_id=student01 account_id=070640552464
+2026-08-18 22:53:04,255 - INFO - Triggering access from S3 student_id=student01 account_id=070640552464 account_name=Coder permissions_bucket=bsoft-aws-labs-880690594512-ap-south-1-an permissions_key=lab1.json session_tag=TempSession
+2026-08-18 22:53:04,313 - INFO - Loading permissions from s3://bsoft-aws-labs-880690594512-ap-south-1-an/lab1.json
+2026-08-18 22:53:04,504 - INFO - Preparing IAM permission injection student_id=student01 account_id=070640552464 user_name=Coder
+2026-08-18 22:53:04,505 - INFO - Building child IAM client account_id=070640552464
+2026-08-18 22:53:04,513 - INFO - Assuming role role_name=rt_provider_core_backend account_id=880690594512 chained_credentials=False
+[OK] Assumed role: rt_provider_core_backend
+2026-08-18 22:53:04,660 - INFO - Assumed role role_name=rt_provider_core_backend account_id=880690594512 expires_at=2026-08-18 18:23:05+00:00
+2026-08-18 22:53:04,667 - INFO - Assuming role role_name=OrganizationAccountAccessRole account_id=070640552464 chained_credentials=True
+[OK] Assumed role: OrganizationAccountAccessRole
+2026-08-18 22:53:04,833 - INFO - Assumed role role_name=OrganizationAccountAccessRole account_id=070640552464 expires_at=2026-08-18 18:23:05+00:00
+[OK] IAM user created: Coder
+2026-08-18 22:53:10,926 - INFO - Created IAM user student_id=student01 user_name=Coder account_id=070640552464
+2026-08-18 22:53:12,926 - INFO - Injecting inline policy policy_name=TempInjectedPolicy student_id=student01 user_name=Coder account_id=070640552464
+2026-08-18 22:53:13,225 - INFO - Listed inline policies student_id=student01 user_name=Coder account_id=070640552464 count=0
+2026-08-18 22:53:13,580 - INFO - Attached managed policy DefaultIamPolicy student_id=student01 user_name=Coder account_id=070640552464
+[OK] Permissions injected for Coder
+2026-08-18 22:53:13,917 - INFO - Inline permissions injected policy_name=TempInjectedPolicy student_id=student01 user_name=Coder account_id=070640552464
+2026-08-18 22:53:14,613 - INFO - No existing login profile found student_id=student01 account_id=070640552464 user_name=Coder
+2026-08-18 22:53:20,472 - INFO - Created login profile student_id=student01 account_id=070640552464 user_name=Coder
+[CREDENTIAL] Temporary password for Coder: zFzE@_3DFii$!2Zy_bFyMX#@
+2026-08-18 22:53:20,472 - INFO - Access trigger completed student_id=student01 account_id=070640552464 account_name=Coder permissions_key=lab1.json
+2026-08-18 22:53:20,474 - INFO - Lab started lab_id=lab1 student_id=student01 account_id=070640552464
+                                                                                                                                                 
+┌──(bsoftvenv)─(carpediem㉿carpediem)-[~/bsoft/bsoft-py/aws_labs]
+└─$ python3 lab_dep.py
+2026-08-18 22:53:23,388 - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+Enter lab id: lab1
+Enter student id: student01
+Start(S) or Stop(T):T
+2026-08-18 22:53:28,619 - INFO - Stopping lab for student_id=student01
+2026-08-18 22:53:28,619 - INFO - Resolving account for student_id=student01
+2026-08-18 22:53:28,619 - INFO - Resolved student_id=student01 to account_id=070640552464
+2026-08-18 22:53:28,619 - INFO - Deleting temporary access for student_id=student01 account_id=070640552464
+2026-08-18 22:53:28,619 - INFO - Deleting temporary access student_id=student01 account_id=070640552464 user_name=Coder
+2026-08-18 22:53:28,619 - INFO - Building child IAM client account_id=070640552464
+2026-08-18 22:53:28,629 - INFO - Assuming role role_name=rt_provider_core_backend account_id=880690594512 chained_credentials=False
+[OK] Assumed role: rt_provider_core_backend
+2026-08-18 22:53:29,056 - INFO - Assumed role role_name=rt_provider_core_backend account_id=880690594512 expires_at=2026-08-18 18:23:29+00:00
+2026-08-18 22:53:29,062 - INFO - Assuming role role_name=OrganizationAccountAccessRole account_id=070640552464 chained_credentials=True
+[OK] Assumed role: OrganizationAccountAccessRole
+2026-08-18 22:53:29,903 - INFO - Assumed role role_name=OrganizationAccountAccessRole account_id=070640552464 expires_at=2026-08-18 18:23:30+00:00
+[OK] Permissions deleted for Coder
+2026-08-18 22:53:30,789 - INFO - Deleted inline policy policy_name=TempInjectedPolicy student_id=student01 user_name=Coder account_id=070640552464
+2026-08-18 22:53:31,111 - INFO - Deleted existing login profile student_id=student01 account_id=070640552464 user_name=Coder
+2026-08-18 22:53:36,910 - INFO - Created login profile student_id=student01 account_id=070640552464 user_name=Coder
+[OK] Password rotated for Coder on account 070640552464
+2026-08-18 22:53:36,910 - INFO - Rotated login profile student_id=student01 user_name=Coder account_id=070640552464
+2026-08-18 22:53:36,912 - INFO - Resolving account alias for account_id=070640552464
+2026-08-18 22:53:36,912 - INFO - Resolved account_id=070640552464 to alias=lab-user02
+2026-08-18 22:53:36,913 - INFO - Fetched alias=lab-user02 before cleanup for account_id=070640552464
+2026-08-18 22:53:36,917 - INFO - Assuming role role_name=rt_provider_core_backend account_id=880690594512 chained_credentials=False
+[OK] Assumed role: rt_provider_core_backend
+2026-08-18 22:53:42,216 - INFO - Assumed role role_name=rt_provider_core_backend account_id=880690594512 expires_at=2026-08-18 18:23:43+00:00
+2026-08-18 22:53:42,222 - INFO - Assuming role role_name=OrganizationAccountAccessRole account_id=070640552464 chained_credentials=True
+[OK] Assumed role: OrganizationAccountAccessRole
+2026-08-18 22:53:42,669 - INFO - Assumed role role_name=OrganizationAccountAccessRole account_id=070640552464 expires_at=2026-08-18 18:23:43+00:00
+2026-08-18 22:53:42,671 - INFO - Acquired child account credentials for cleanup account_id=070640552464
+2026-08-18 22:53:42,672 - INFO - Starting cleanup student_id=student01 account_id=070640552464
+2026-08-18 22:53:42 INFO     cleanup_engine: student_id=student01 account_id=070640552464 Attempting to acquire cleanup lock for account 070640552464
+2026-08-18 22:53:42 INFO     cleanup_engine: student_id=student01 account_id=070640552464 Cleanup lock acquired for account 070640552464
+2026-08-18 22:53:42 INFO     cleanup_engine: student_id=student01 account_id=070640552464 Starting cleanup for account 070640552464
+2026-08-18 22:53:42 INFO     cleanup_engine: student_id=student01 account_id=070640552464 Role: OrganizationAccountAccessRole
+2026-08-18 22:53:42 INFO     cleanup_engine: student_id=student01 account_id=070640552464 Regions: ap-south-1
+2026-08-18 22:53:42 INFO     cleanup_engine: student_id=student01 account_id=070640552464 Dry run: False
+2026-08-18 22:53:42 INFO     cleanup_engine: student_id=student01 account_id=070640552464 Generated aws-nuke config: logs/runtime/070640552464/nuke-config.yaml
+2026-08-18 22:53:42 INFO     cleanup_engine: student_id=student01 account_id=070640552464 Account 070640552464 / region ap-south-1
+2026-08-18 22:53:43 INFO     cleanup_engine: student_id=student01 account_id=070640552464 STS account verification passed: 070640552464
+2026-08-18 22:53:43 INFO     orchestrator: student_id=student01 account_id=070640552464 Starting cleanup run for account 070640552464 in ap-south-1
+2026-08-18 22:53:43 INFO     orchestrator: student_id=student01 account_id=070640552464 Discovered 16 service plugins: apigateway, application-autoscaling, autoscaling, cloudformation, ec2, ecr, ecs, eks, elasticbeanstalk, elb, eventbridge, iam, kms, lambda, rds, s3
+2026-08-18 22:53:43 INFO     orchestrator: student_id=student01 account_id=070640552464 PHASE 1 - Inventory
+2026-08-18 22:53:43 INFO     services.apigateway: student_id=student01 account_id=070640552464 [DISCOVER]  Scanning API Gateway (REST + HTTP/WebSocket) resources ...
+2026-08-18 22:53:43 INFO     services.application-autoscaling: student_id=student01 account_id=070640552464 [DISCOVER]  Scanning Application Auto Scaling across 15 service namespaces ...
+2026-08-18 22:53:43 INFO     services.autoscaling: student_id=student01 account_id=070640552464 [DISCOVER]  Scanning Auto Scaling groups and launch configurations ...
+2026-08-18 22:53:43 INFO     services.cloudformation: student_id=student01 account_id=070640552464 [DISCOVER]  Scanning CloudFormation stacks ...
+2026-08-18 22:53:43 INFO     services.ec2: student_id=student01 account_id=070640552464 [DISCOVER]  Scanning EC2 instances, volumes, snapshots, and networking resources ...
+2026-08-18 22:53:43 INFO     services.ecr: student_id=student01 account_id=070640552464 [DISCOVER]  Scanning ECR repositories ...
+2026-08-18 22:53:43 INFO     services.ecs: student_id=student01 account_id=070640552464 [DISCOVER]  Scanning ECS clusters, services, tasks, container instances, and task definitions ...
+2026-08-18 22:53:43 INFO     services.eks: student_id=student01 account_id=070640552464 [DISCOVER]  Scanning EKS clusters and their node groups, Fargate profiles, and add-ons ...
+2026-08-18 22:53:43 INFO     services.elasticbeanstalk: student_id=student01 account_id=070640552464 [DISCOVER]  Scanning Elastic Beanstalk applications, environments, versions, and configuration templates ...
+2026-08-18 22:53:43 INFO     services.elb: student_id=student01 account_id=070640552464 [DISCOVER]  Scanning ELB (v2 + classic) load balancers and target groups ...
+2026-08-18 22:53:43 INFO     services.eventbridge: student_id=student01 account_id=070640552464 [DISCOVER]  Scanning EventBridge buses, rules, archives, and schema registries ...
+2026-08-18 22:53:43 INFO     services.iam: student_id=student01 account_id=070640552464 [DISCOVER]  Scanning IAM roles, policies, instance profiles, users, and groups ...
+2026-08-18 22:53:43 INFO     services.kms: student_id=student01 account_id=070640552464 [DISCOVER]  Scanning KMS customer managed keys and aliases ...
+2026-08-18 22:53:43 INFO     services.lambda: student_id=student01 account_id=070640552464 [DISCOVER]  Scanning Lambda functions, event source mappings, and layer versions ...
+2026-08-18 22:53:43 INFO     services.rds: student_id=student01 account_id=070640552464 [DISCOVER]  Scanning RDS clusters and instances ...
+2026-08-18 22:53:43 INFO     services.s3: student_id=student01 account_id=070640552464 [DISCOVER]  Scanning S3 buckets ...
+2026-08-18 22:53:44 INFO     services.elasticbeanstalk: student_id=student01 account_id=070640552464 [DISCOVER]  Found 0 applications, 0 environments, 0 application versions, 0 configuration templates
+2026-08-18 22:53:44 INFO     services.iam: student_id=student01 account_id=070640552464 IAM protected policy names: ['CoderCreatedIdentityBoundary', 'DefaultIamPolicy']
+2026-08-18 22:53:44 INFO     services.s3: student_id=student01 account_id=070640552464 [DISCOVER]  Found 0 buckets
+2026-08-18 22:53:44 INFO     services.elb: student_id=student01 account_id=070640552464 [DISCOVER]  Found 0 v2 load balancers, 0 target groups, 0 classic load balancers
+2026-08-18 22:53:44 INFO     services.eventbridge: student_id=student01 account_id=070640552464 [DISCOVER]  Found 0 custom event buses, 0 rules, 0 archives, 0 custom schema registries, 0 schemas
+2026-08-18 22:53:44 INFO     services.cloudformation: student_id=student01 account_id=070640552464 [DISCOVER]  Found 0 stacks
+2026-08-18 22:53:44 INFO     services.ecr: student_id=student01 account_id=070640552464 [DISCOVER]  Found 0 repositories
+2026-08-18 22:53:44 INFO     services.autoscaling: student_id=student01 account_id=070640552464 [DISCOVER]  Found 0 Auto Scaling groups, 0 launch configurations
+2026-08-18 22:53:44 INFO     services.eks: student_id=student01 account_id=070640552464 [DISCOVER]  Found 0 clusters, 0 node groups, 0 Fargate profiles, 0 add-ons, 0 access entries
+2026-08-18 22:53:44 INFO     services.ecs: student_id=student01 account_id=070640552464 [DISCOVER]  Found 0 clusters, 0 services, 0 standalone tasks, 0 container instances, 0 active task definitions
+2026-08-18 22:53:44 INFO     services.rds: student_id=student01 account_id=070640552464 [DISCOVER]  Found 0 DB clusters and 0 DB instances
+2026-08-18 22:53:45 INFO     services.lambda: student_id=student01 account_id=070640552464 [DISCOVER]  Found 0 functions, 0 event source mappings, 0 layer versions
+2026-08-18 22:53:45 INFO     services.kms: student_id=student01 account_id=070640552464 [DISCOVER]  Found 0 customer managed keys, 0 aliases (4 AWS managed keys excluded -- not customer-deletable)
+2026-08-18 22:53:45 INFO     services.apigateway: student_id=student01 account_id=070640552464 [DISCOVER]  Found API Gateway resources: {}
+2026-08-18 22:53:45 INFO     services.ec2: student_id=student01 account_id=070640552464 [DISCOVER]  Found 0 instances, 0 volumes, 0 snapshots, 0 networking resources
+2026-08-18 22:53:49 INFO     services.iam: student_id=student01 account_id=070640552464 [DISCOVER]  Protecting IAM policy 'DefaultIamPolicy' from deletion
+2026-08-18 22:53:49 INFO     services.iam: student_id=student01 account_id=070640552464 [DISCOVER]  Protecting IAM policy 'CoderCreatedIdentityBoundary' from deletion
+2026-08-18 22:53:49 INFO     services.iam: student_id=student01 account_id=070640552464 [DISCOVER]  Protecting currently-assumed role 'OrganizationAccountAccessRole' from deletion
+2026-08-18 22:53:49 INFO     services.iam: student_id=student01 account_id=070640552464 [DISCOVER]  Found 0 deletable roles, 0 deletable customer-managed policies, 0 instance profiles, 1 users, 0 groups
+2026-08-18 22:54:02 INFO     services.application-autoscaling: student_id=student01 account_id=070640552464 [DISCOVER]  Found 0 scalable targets, 0 scaling policies, 0 scheduled actions
+2026-08-18 22:54:02 INFO     orchestrator: student_id=student01 account_id=070640552464 Inventory written to logs/reports/070640552464/ap-south-1/inventory.json
+2026-08-18 22:54:02 INFO     orchestrator: student_id=student01 account_id=070640552464 PHASE 2 - Custom cleanup
+2026-08-18 22:54:02 INFO     orchestrator: student_id=student01 account_id=070640552464 Cleaning up service: apigateway
+2026-08-18 22:54:02 INFO     services.apigateway: student_id=student01 account_id=070640552464 [CLEANUP]   No API Gateway resources to delete
+2026-08-18 22:54:02 INFO     orchestrator: student_id=student01 account_id=070640552464 Cleaning up service: application-autoscaling
+2026-08-18 22:54:02 INFO     services.application-autoscaling: student_id=student01 account_id=070640552464 [CLEANUP]   No Application Auto Scaling resources to delete
+2026-08-18 22:54:02 INFO     orchestrator: student_id=student01 account_id=070640552464 Cleaning up service: autoscaling
+2026-08-18 22:54:02 INFO     services.autoscaling: student_id=student01 account_id=070640552464 [CLEANUP]   No Auto Scaling resources to delete
+2026-08-18 22:54:02 INFO     orchestrator: student_id=student01 account_id=070640552464 Cleaning up service: cloudformation
+2026-08-18 22:54:02 INFO     services.cloudformation: student_id=student01 account_id=070640552464 [CLEANUP]   No CloudFormation stacks to delete
+2026-08-18 22:54:02 INFO     orchestrator: student_id=student01 account_id=070640552464 Cleaning up service: ec2
+2026-08-18 22:54:02 INFO     services.ec2: student_id=student01 account_id=070640552464 [CLEANUP]   No EC2 resources to delete
+2026-08-18 22:54:02 INFO     orchestrator: student_id=student01 account_id=070640552464 Cleaning up service: ecr
+2026-08-18 22:54:02 INFO     services.ecr: student_id=student01 account_id=070640552464 [CLEANUP]   No ECR resources to delete
+2026-08-18 22:54:02 INFO     orchestrator: student_id=student01 account_id=070640552464 Cleaning up service: ecs
+2026-08-18 22:54:02 INFO     services.ecs: student_id=student01 account_id=070640552464 [CLEANUP]   No ECS resources to delete
+2026-08-18 22:54:02 INFO     orchestrator: student_id=student01 account_id=070640552464 Cleaning up service: eks
+2026-08-18 22:54:02 INFO     services.eks: student_id=student01 account_id=070640552464 [CLEANUP]   No EKS resources to delete
+2026-08-18 22:54:02 INFO     orchestrator: student_id=student01 account_id=070640552464 Cleaning up service: elasticbeanstalk
+2026-08-18 22:54:02 INFO     services.elasticbeanstalk: student_id=student01 account_id=070640552464 [CLEANUP]   No Elastic Beanstalk resources to delete
+2026-08-18 22:54:02 INFO     orchestrator: student_id=student01 account_id=070640552464 Cleaning up service: elb
+2026-08-18 22:54:02 INFO     services.elb: student_id=student01 account_id=070640552464 [CLEANUP]   No ELB resources to delete
+2026-08-18 22:54:02 INFO     orchestrator: student_id=student01 account_id=070640552464 Cleaning up service: eventbridge
+2026-08-18 22:54:02 INFO     services.eventbridge: student_id=student01 account_id=070640552464 [CLEANUP]   No EventBridge resources to delete
+2026-08-18 22:54:02 INFO     orchestrator: student_id=student01 account_id=070640552464 Cleaning up service: iam
+2026-08-18 22:54:07 INFO     services.iam: student_id=student01 account_id=070640552464 [CLEANUP]   Deleted user Coder
+2026-08-18 22:54:07 INFO     orchestrator: student_id=student01 account_id=070640552464 Cleaning up service: kms
+2026-08-18 22:54:07 INFO     services.kms: student_id=student01 account_id=070640552464 [CLEANUP]   No KMS resources to delete
+2026-08-18 22:54:07 INFO     orchestrator: student_id=student01 account_id=070640552464 Cleaning up service: lambda
+2026-08-18 22:54:07 INFO     services.lambda: student_id=student01 account_id=070640552464 [CLEANUP]   No Lambda resources to delete
+2026-08-18 22:54:07 INFO     orchestrator: student_id=student01 account_id=070640552464 Cleaning up service: rds
+2026-08-18 22:54:07 INFO     services.rds: student_id=student01 account_id=070640552464 [CLEANUP]   No RDS clusters or instances to delete
+2026-08-18 22:54:07 INFO     orchestrator: student_id=student01 account_id=070640552464 Cleaning up service: s3
+2026-08-18 22:54:07 INFO     services.s3: student_id=student01 account_id=070640552464 [CLEANUP]   No S3 buckets to delete
+2026-08-18 22:54:07 INFO     orchestrator: student_id=student01 account_id=070640552464 PHASE 3 - Pre aws-nuke verification
+2026-08-18 22:54:07 INFO     services.apigateway: student_id=student01 account_id=070640552464 [VERIFY]    Verifying API Gateway is clean ...
+2026-08-18 22:54:07 INFO     services.application-autoscaling: student_id=student01 account_id=070640552464 [VERIFY]    Verifying Application Auto Scaling is clean ...
+2026-08-18 22:54:07 INFO     services.autoscaling: student_id=student01 account_id=070640552464 [VERIFY]    Verifying Auto Scaling is clean ...
+2026-08-18 22:54:07 INFO     services.cloudformation: student_id=student01 account_id=070640552464 [VERIFY]    Verifying CloudFormation is clean ...
+2026-08-18 22:54:07 INFO     services.ec2: student_id=student01 account_id=070640552464 [VERIFY]    Verifying EC2 is clean ...
+2026-08-18 22:54:07 INFO     services.ecr: student_id=student01 account_id=070640552464 [VERIFY]    Verifying ECR is clean ...
+2026-08-18 22:54:07 INFO     services.ecs: student_id=student01 account_id=070640552464 [VERIFY]    Verifying ECS is clean ...
+2026-08-18 22:54:07 INFO     services.eks: student_id=student01 account_id=070640552464 [VERIFY]    Verifying EKS is clean ...
+2026-08-18 22:54:07 INFO     services.elasticbeanstalk: student_id=student01 account_id=070640552464 [VERIFY]    Verifying Elastic Beanstalk is clean ...
+2026-08-18 22:54:07 INFO     services.elb: student_id=student01 account_id=070640552464 [VERIFY]    Verifying ELB (v2 + classic) is clean ...
+2026-08-18 22:54:07 INFO     services.eventbridge: student_id=student01 account_id=070640552464 [VERIFY]    Verifying EventBridge is clean ...
+2026-08-18 22:54:07 INFO     services.iam: student_id=student01 account_id=070640552464 [VERIFY]    Verifying IAM is clean ...
+2026-08-18 22:54:07 INFO     services.kms: student_id=student01 account_id=070640552464 [VERIFY]    Verifying KMS is clean (or all customer keys scheduled for deletion) ...
+2026-08-18 22:54:07 INFO     services.ecr: student_id=student01 account_id=070640552464 [VERIFY]    ECR clean
+2026-08-18 22:54:07 INFO     services.lambda: student_id=student01 account_id=070640552464 [VERIFY]    Verifying Lambda is clean ...
+2026-08-18 22:54:07 INFO     services.rds: student_id=student01 account_id=070640552464 [VERIFY]    Verifying RDS is clean ...
+2026-08-18 22:54:07 INFO     services.s3: student_id=student01 account_id=070640552464 [VERIFY]    Verifying S3 is clean ...
+2026-08-18 22:54:07 INFO     services.eks: student_id=student01 account_id=070640552464 [VERIFY]    EKS clean
+2026-08-18 22:54:07 INFO     services.cloudformation: student_id=student01 account_id=070640552464 [VERIFY]    CloudFormation clean
+2026-08-18 22:54:07 INFO     services.rds: student_id=student01 account_id=070640552464 [VERIFY]    RDS clean
+2026-08-18 22:54:07 INFO     services.ecs: student_id=student01 account_id=070640552464 [VERIFY]    ECS clean
+2026-08-18 22:54:07 INFO     services.autoscaling: student_id=student01 account_id=070640552464 [VERIFY]    Auto Scaling clean
+2026-08-18 22:54:07 INFO     services.lambda: student_id=student01 account_id=070640552464 [VERIFY]    Lambda clean
+2026-08-18 22:54:07 INFO     services.s3: student_id=student01 account_id=070640552464 [VERIFY]    S3 clean
+2026-08-18 22:54:07 INFO     services.elasticbeanstalk: student_id=student01 account_id=070640552464 [VERIFY]    Elastic Beanstalk clean
+2026-08-18 22:54:07 INFO     services.eventbridge: student_id=student01 account_id=070640552464 [VERIFY]    EventBridge clean
+2026-08-18 22:54:07 INFO     services.elb: student_id=student01 account_id=070640552464 [VERIFY]    ELB clean
+2026-08-18 22:54:07 INFO     services.kms: student_id=student01 account_id=070640552464 [VERIFY]    KMS clean (0 customer keys scheduled for deletion, pending their waiting period)
+2026-08-18 22:54:07 INFO     services.ec2: student_id=student01 account_id=070640552464 [VERIFY]    EC2 clean
+2026-08-18 22:54:07 INFO     services.apigateway: student_id=student01 account_id=070640552464 [VERIFY]    API Gateway clean
+2026-08-18 22:54:09 INFO     services.iam: student_id=student01 account_id=070640552464 [VERIFY]    IAM clean
+2026-08-18 22:54:17 INFO     services.application-autoscaling: student_id=student01 account_id=070640552464 [VERIFY]    Application Auto Scaling clean
+2026-08-18 22:54:17 INFO     orchestrator: student_id=student01 account_id=070640552464 Verification written to logs/reports/070640552464/ap-south-1/verification_pre_nuke.json
+2026-08-18 22:54:17 INFO     orchestrator: student_id=student01 account_id=070640552464 Pre aws-nuke verification: PASS
+2026-08-18 22:54:17 INFO     orchestrator: student_id=student01 account_id=070640552464 PHASE 4 - aws-nuke
+2026-08-18 22:54:17 INFO     aws_nuke: student_id=student01 account_id=070640552464 Starting aws-nuke [DESTRUCTIVE] for account 070640552464 in region ap-south-1
+2026-08-18 22:56:49 INFO     aws_nuke: student_id=student01 account_id=070640552464 aws-nuke completed successfully
+2026-08-18 22:56:49 INFO     orchestrator: student_id=student01 account_id=070640552464 aws-nuke phase completed successfully
+2026-08-18 22:56:49 INFO     orchestrator: student_id=student01 account_id=070640552464 PHASE 5 - Final verification
+2026-08-18 22:56:49 INFO     services.apigateway: student_id=student01 account_id=070640552464 [VERIFY]    Verifying API Gateway is clean ...
+2026-08-18 22:56:49 INFO     services.application-autoscaling: student_id=student01 account_id=070640552464 [VERIFY]    Verifying Application Auto Scaling is clean ...
+2026-08-18 22:56:49 INFO     services.autoscaling: student_id=student01 account_id=070640552464 [VERIFY]    Verifying Auto Scaling is clean ...
+2026-08-18 22:56:49 INFO     services.cloudformation: student_id=student01 account_id=070640552464 [VERIFY]    Verifying CloudFormation is clean ...
+2026-08-18 22:56:49 INFO     services.ec2: student_id=student01 account_id=070640552464 [VERIFY]    Verifying EC2 is clean ...
+2026-08-18 22:56:49 INFO     services.ecr: student_id=student01 account_id=070640552464 [VERIFY]    Verifying ECR is clean ...
+2026-08-18 22:56:49 INFO     services.ecs: student_id=student01 account_id=070640552464 [VERIFY]    Verifying ECS is clean ...
+2026-08-18 22:56:49 INFO     services.eks: student_id=student01 account_id=070640552464 [VERIFY]    Verifying EKS is clean ...
+2026-08-18 22:56:49 INFO     services.elasticbeanstalk: student_id=student01 account_id=070640552464 [VERIFY]    Verifying Elastic Beanstalk is clean ...
+2026-08-18 22:56:49 INFO     services.elb: student_id=student01 account_id=070640552464 [VERIFY]    Verifying ELB (v2 + classic) is clean ...
+2026-08-18 22:56:49 INFO     services.eventbridge: student_id=student01 account_id=070640552464 [VERIFY]    Verifying EventBridge is clean ...
+2026-08-18 22:56:49 INFO     services.iam: student_id=student01 account_id=070640552464 [VERIFY]    Verifying IAM is clean ...
+2026-08-18 22:56:49 INFO     services.kms: student_id=student01 account_id=070640552464 [VERIFY]    Verifying KMS is clean (or all customer keys scheduled for deletion) ...
+2026-08-18 22:56:49 INFO     services.lambda: student_id=student01 account_id=070640552464 [VERIFY]    Verifying Lambda is clean ...
+2026-08-18 22:56:49 INFO     services.rds: student_id=student01 account_id=070640552464 [VERIFY]    Verifying RDS is clean ...
+2026-08-18 22:56:49 INFO     services.s3: student_id=student01 account_id=070640552464 [VERIFY]    Verifying S3 is clean ...
+2026-08-18 22:56:50 INFO     services.eks: student_id=student01 account_id=070640552464 [VERIFY]    EKS clean
+2026-08-18 22:56:50 INFO     services.cloudformation: student_id=student01 account_id=070640552464 [VERIFY]    CloudFormation clean
+2026-08-18 22:56:50 INFO     services.ecs: student_id=student01 account_id=070640552464 [VERIFY]    ECS clean
+2026-08-18 22:56:50 INFO     services.lambda: student_id=student01 account_id=070640552464 [VERIFY]    Lambda clean
+2026-08-18 22:56:50 INFO     services.elasticbeanstalk: student_id=student01 account_id=070640552464 [VERIFY]    Elastic Beanstalk clean
+2026-08-18 22:56:50 INFO     services.s3: student_id=student01 account_id=070640552464 [VERIFY]    S3 clean
+2026-08-18 22:56:50 INFO     services.eventbridge: student_id=student01 account_id=070640552464 [VERIFY]    EventBridge clean
+2026-08-18 22:56:50 INFO     services.elb: student_id=student01 account_id=070640552464 [VERIFY]    ELB clean
+2026-08-18 22:56:50 INFO     services.ec2: student_id=student01 account_id=070640552464 [VERIFY]    EC2 clean
+2026-08-18 22:56:50 INFO     services.apigateway: student_id=student01 account_id=070640552464 [VERIFY]    API Gateway clean
+2026-08-18 22:56:51 INFO     services.ecr: student_id=student01 account_id=070640552464 [VERIFY]    ECR clean
+2026-08-18 22:56:51 INFO     services.autoscaling: student_id=student01 account_id=070640552464 [VERIFY]    Auto Scaling clean
+2026-08-18 22:56:51 INFO     services.rds: student_id=student01 account_id=070640552464 [VERIFY]    RDS clean
+2026-08-18 22:56:51 INFO     services.kms: student_id=student01 account_id=070640552464 [VERIFY]    KMS clean (0 customer keys scheduled for deletion, pending their waiting period)
+2026-08-18 22:56:51 INFO     services.iam: student_id=student01 account_id=070640552464 [VERIFY]    IAM clean
+2026-08-18 22:57:04 INFO     services.application-autoscaling: student_id=student01 account_id=070640552464 [VERIFY]    Application Auto Scaling clean
+2026-08-18 22:57:04 INFO     orchestrator: student_id=student01 account_id=070640552464 Verification written to logs/reports/070640552464/ap-south-1/verification_final.json
+2026-08-18 22:57:04 INFO     orchestrator: student_id=student01 account_id=070640552464 Final verification: PASS
+2026-08-18 22:57:04 INFO     orchestrator: student_id=student01 account_id=070640552464 PHASE 6 - Report generation
+2026-08-18 22:57:04 INFO     cleanup_engine: student_id=student01 account_id=070640552464 Account cleanup result: PASS
+2026-08-18 22:57:04 INFO     cleanup_engine: student_id=student01 account_id=070640552464 Reusable: True
+2026-08-18 22:57:04 INFO     cleanup_engine: student_id=student01 account_id=070640552464 Remaining resources: 0
+2026-08-18 22:57:04 INFO     nuke: Cleanup completed student_id=student01 account_id=070640552464 status=PASS reusable=True remaining_resources=0 report_path=logs/reports/070640552464/cleanup_report_summary.json
+[DONE] Account cleanup passed: 070640552464
+2026-08-18 22:57:04 INFO     __main__: Detaching student allocation student_id=student01
+2026-08-18 22:57:04 INFO     __main__: Detached student allocation student_id=student01
+2026-08-18 22:57:04 INFO     __main__: Lab stopped for student_id=student01 account_id=070640552464

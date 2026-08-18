@@ -8,9 +8,9 @@ def add_cluster(student_id,clu,asg,clu_stack):
             cl[student_id] = dict({ "clu": clu, "asg": asg, "clu_stack": clu_stack})
             with open("/home/carpediem/bsoft/leaky/clusters.json","w") as ff:
                 ff.write(json.dumps(cl))
-                print("Added cluster arn!!")
+                print(f"[OK] student_id={student_id} Cluster recorded")
         else:
-            print('[*] Cluster ARN not appended')
+            print(f"[INFO] student_id={student_id} Cluster already recorded")
 
 
 def add_service(student_id,serv_stack):
@@ -20,9 +20,9 @@ def add_service(student_id,serv_stack):
             cl[student_id]["serv_stack"] = serv_stack
             with open("/home/carpediem/bsoft/leaky/clusters.json","w") as ff:
                 ff.write(json.dumps(cl))
-                print("Added service arn!!")
+                print(f"[OK] student_id={student_id} Service stack recorded")
         else:
-            print('[*] Service ARN not appended')
+            print(f"[WARN] student_id={student_id} Cannot record service stack; cluster not found")
 
 def add_static_ip(student_id):
     cl=''
@@ -34,4 +34,4 @@ def add_static_ip(student_id):
             with open("./static_ips.json","w") as ff:
                 ff.write(json.dumps(cl))
         else:
-            print('[*] Not appended')
+            print(f"[INFO] student_id={student_id} Static IP already recorded")

@@ -42,7 +42,7 @@ def retrieve_sg(stack_name):
     stacks  = client.describe_stacks(StackName=stack_name)["Stacks"]
     outputs = stacks[0].get("Outputs", [])
     if outputs:
-        print("\nStack outputs:")
+        print("[INFO] Stack outputs:")
         for out in outputs:
             print(f"  {out['OutputKey']}: {out['OutputValue']}")
     for i in outputs:
@@ -58,46 +58,48 @@ def retreive_stack(client):
     
 
 def deploy(student):
+    print(f"[INFO] student_id={student} Starting attack box deployment")
     dat = library.start_instance("","room",student,"ami-083f389196406f0ca","GUI","t3.medium")
     if dat:
         client_ip = fetch_static_ip(student)
-        print("Started AttackINstance!!!!!")
+        print(f"[OK] student_id={student} Attack instance started")
 
         serv_stack = retreive_stack(student)
         if serv_stack:
             sg_id = retrieve_sg(serv_stack)
-            assign2sg.add_security_group_rules(sg_id,dat["ip"])
-            assign2sg.add_sgid_to_sg(dat["sg_id"],sg_id)
-            print("Alternate sg assigned!!")
+            assign2sg.add_security_group_rules(sg_id,dat["ip"], student_id=student)
+            assign2sg.add_sgid_to_sg(dat["sg_id"],sg_id, student_id=student)
+            print(f"[OK] student_id={student} Room security group linked")
 
-            assign2sg.add_sg_rules(dat["sg_id"],client_ip)
-            remote.send_uni_add(dat["ip"],client_ip)
-            print("Access granted to user!!!")
+            assign2sg.add_sg_rules(dat["sg_id"],client_ip, student_id=student)
+            remote.send_uni_add(dat["ip"],client_ip, student_id=student)
+            print(f"[OK] student_id={student} VPN access granted")
 
             store(student,dat["instance_id"])
-            print("[**] Deployed!!!!")
+            print(f"[DONE] student_id={student} Attack box deployed")
         else:
-            print(f"Service Stack not found!!..No active room service found for {student}")
+            print(f"[WARN] student_id={student} No active room service found")
 
 def destroy(student):
-    ip = library.stop_instance(fetch_instance_id(student))
+    print(f"[INFO] student_id={student} Starting attack box deletion")
+    ip = library.stop_instance(fetch_instance_id(student), student_id=student)
     if ip:
         client_ip = fetch_static_ip(student)
-        print("Successfully destroyed AttackINstance")
+        print(f"[OK] student_id={student} Attack instance destroyed")
 
         serv_stack = retreive_stack(student)
         if serv_stack:
             sg_id = retrieve_sg(retreive_stack(student))
-            assign2sg.remove_ingress_rule(sg_id,ip)
-            print("Room SG removed!!!")
+            assign2sg.remove_ingress_rule(sg_id,ip, student_id=student)
+            print(f"[OK] student_id={student} Room security group access removed")
 
-            remote.send_uni_del(client_ip,ip)
-            print("Access revoked!!")
+            remote.send_uni_del(client_ip,ip, student_id=student)
+            print(f"[OK] student_id={student} VPN access revoked")
 
             delete(student)
-            print("[**] Destroyed!!!!")
+            print(f"[DONE] student_id={student} Attack box destroyed")
         else:
-            print(f"Service Stack not found!!..No active room service found for {student}")
+            print(f"[WARN] student_id={student} No active room service found")
 
 
 
@@ -105,4 +107,3 @@ if __name__ == '__main__':
     student = input("Enter the student id : ")
     choice = input("Enter your choice : Deploy(D) or Destroy(T)")
     deploy(student) if choice == 'D' else destroy(student)
-

@@ -20,5 +20,5 @@ if __name__ == "__main__":
     for i in PARAMETERS:
         value = input(f"Enter the parameter value for {i["ParameterKey"]}:")
         i["ParameterValue"] = value
-    print(PARAMETERS)
+    print(f"[INFO] stack_name={STACK_NAME} Parameters collected: {PARAMETERS}")
     create_stack(STACK_NAME,PARAMETERS,json.loads(template))

@@ -12,17 +12,17 @@ def create_iam_user(user_name: str,iam_client):
     Creates an IAM user with the specified name.
     """
     try:
-        print(f"Creating IAM user: {user_name}...")
+        print(f"[INFO] Creating IAM user: {user_name}")
         response = iam_client.create_user(UserName=user_name)
         user_arn = response['User']['Arn']
-        print(f"✅ Success! User '{user_name}' created. ARN: {user_arn}")
+        print(f"[OK] IAM user created: {user_name} ({user_arn})")
         return response
     except ClientError as e:
         error_code = e.response['Error']['Code']
         if error_code == 'EntityAlreadyExists':
-            print(f"⚠️ User '{user_name}' already exists.")
+            print(f"[INFO] IAM user already exists: {user_name}")
         else:
-            print(f"❌ Failed to create user: {e}")
+            print(f"[ERROR] Failed to create IAM user {user_name}: {e}")
         return None
 
 def create_iam_boundary(iam):
@@ -37,12 +37,11 @@ def create_iam_boundary(iam):
             Description="Permissions boundary created by automation."
         )
 
-        print("Policy created successfully!")
-        print("Policy ARN:", response["Policy"]["Arn"])
+        print(f"[OK] Policy created: {response['Policy']['Arn']}")
 
     except ClientError as e:
         if e.response["Error"]["Code"] == "EntityAlreadyExists":
-            print(f"Policy already exists.")
+            print("[INFO] Policy already exists: CoderCreatedIdentityBoundary")
         else:
             raise
 
@@ -61,12 +60,11 @@ def create_iam_policy(iam,account_id):
             Description="Permissions boundary created by automation."
         )
 
-        print("Policy created successfully!")
-        print("Policy ARN:", response["Policy"]["Arn"])
+        print(f"[OK] Policy created: {response['Policy']['Arn']}")
 
     except ClientError as e:
         if e.response["Error"]["Code"] == "EntityAlreadyExists":
-            print(f"Policy already exists.")
+            print("[INFO] Policy already exists: DefaultIamPolicy")
         else:
             raise
 
@@ -105,7 +103,7 @@ def delete_iam_policy(iam,account_id):
     PolicyArn=policy_arn
     )
 
-    print(f"Policy deleted successfully! {account_id}")
+    print(f"[OK] Policy deleted for account {account_id}")
 
 
 
@@ -115,16 +113,16 @@ def create_aws_account_alias(alias: str,iam_client):
     Note: An account can only have ONE alias at a time.
     """
     try:
-        print(f"Setting global account alias to: '{alias}'...")
+        print(f"[INFO] Setting account alias: {alias}")
         iam_client.create_account_alias(AccountAlias=alias)
-        print(f"✅ Success! Your sign-in URL is now: https://{alias}.signin.aws.amazon.com/console")
+        print(f"[OK] Sign-in URL: https://{alias}.signin.aws.amazon.com/console")
         return True
     except ClientError as e:
         error_code = e.response['Error']['Code']
         if error_code == 'EntityAlreadyExists':
-            print(f"⚠️ The account alias '{alias}' is already taken by you or another AWS customer.")
+            print(f"[WARN] Account alias is already taken: {alias}")
         else:
-            print(f"❌ Failed to create account alias: {e}")
+            print(f"[ERROR] Failed to create account alias {alias}: {e}")
         return False
 
 def list_active_accounts():
@@ -135,7 +133,7 @@ def list_active_accounts():
     if res:
         res = res["Accounts"]
         res = [[i["Id"],i["Name"]] for i in res if i["Status"]=="ACTIVE"]
-        print("Active accounts listed!!")
+        print(f"[INFO] Active accounts listed: {len(res)}")
         # print(res)cl
         return res
 
@@ -166,5 +164,3 @@ if __name__ == "__main__":
         delete_iam_policy(client,i[0])
         time.sleep(5)
         create_iam_policy(client,i[0])
-
-    

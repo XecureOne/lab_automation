@@ -10,13 +10,18 @@ INSTANCE_TYPE = ""
 
 ec2 = boto3.client("ec2", region_name=REGION)
 
+
+def _ctx(student_id=None):
+    return f" student_id={student_id}" if student_id else ""
+
+
 def start_instance(lab, lab_type, student_id, image_id, inst_type, tier):
     global INSTANCE_TYPE
     INSTANCE_TYPE = tier
     if INSTANCE_TYPE:
         pass 
     else:
-        print("Invalid lab option!!")
+        print(f"[ERROR]{_ctx(student_id)} Invalid lab option")
         sys.exit(0)
 
     LAB_SUBNETS = [
@@ -44,8 +49,7 @@ def start_instance(lab, lab_type, student_id, image_id, inst_type, tier):
             if i['GroupName'] == f"{student_id} security group":
                 raise
     except Exception as e:
-        print(e)
-        print("Active lab session found...clear up all your previous sessions!!")
+        print(f"[WARN]{_ctx(student_id)} Active lab session already exists: {e}")
         return
     sg_response = ec2.create_security_group(
     GroupName=f"{student_id} security group",
@@ -53,7 +57,7 @@ def start_instance(lab, lab_type, student_id, image_id, inst_type, tier):
     VpcId=VPC_ID
     )
     security_group_id = sg_response["GroupId"]
-    print("Created Security Group:", security_group_id)
+    print(f"[OK]{_ctx(student_id)} Security group created: {security_group_id}")
 
     response = ec2.run_instances(
     ImageId=f'{image_id}',
@@ -77,13 +81,13 @@ def start_instance(lab, lab_type, student_id, image_id, inst_type, tier):
 
     instance_id = instance['InstanceId']
     private_ip = instance['PrivateIpAddress']
-    print("Instance Launched:", instance_id)
+    print(f"[OK]{_ctx(student_id)} Instance launched: {instance_id}")
     return { "instance_id": instance_id,"sg_id": security_group_id, "ip": private_ip}
 
 
-def stop_instance(instance_id):
+def stop_instance(instance_id, student_id=None):
     flag = False
-    print("Initiated Termination of instance!!")
+    print(f"[INFO]{_ctx(student_id)} Terminating instance: {instance_id}")
     response = ec2.describe_instances(
     InstanceIds=[instance_id]
     )
@@ -97,13 +101,13 @@ def stop_instance(instance_id):
             InstanceIds=[instance_id]
         )
         flag = True
-        print(f"Terminated instance: {instance_id}")
+        print(f"[OK]{_ctx(student_id)} Instance terminated: {instance_id}")
 
     for i in security_groups:
         ec2.delete_security_group(
         GroupId=i["GroupId"]
         )
-        print(f"Deleted security group {i['GroupId']}")
+        print(f"[OK]{_ctx(student_id)} Security group deleted: {i['GroupId']}")
     return response["Reservations"][0]["Instances"][0]["PrivateIpAddress"]
 
         
@@ -139,6 +143,3 @@ def stop_instance(instance_id):
 #         CommandId=command_id,
 #         InstanceId=instance_id
 #     )
-
-#     print("STDOUT:\n", output["StandardOutputContent"])
-#     print("STDERR:\n", output["StandardErrorContent"])

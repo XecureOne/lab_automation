@@ -1,5 +1,6 @@
 {
   "account_id": "070640552464",
+  "student_id": "student01",
   "status": "PASS",
   "reusable": true,
   "regions": {
@@ -11,8 +12,8 @@
     {
       "account_id": "070640552464",
       "region": "ap-south-1",
-      "start_time": "2026-08-10T21:44:33.996135+00:00",
-      "end_time": "2026-08-10T21:44:33.996180+00:00",
+      "start_time": "2026-08-18T17:27:04.116067+00:00",
+      "end_time": "2026-08-18T17:27:04.116097+00:00",
       "elapsed_seconds": 0.0,
       "dry_run": false,
       "resources_discovered": 1,
@@ -160,7 +161,7 @@
           "deleted": 1,
           "failed": 0,
           "skipped": 0,
-          "duration_seconds": 3.36,
+          "duration_seconds": 4.9,
           "verification_status": "PASS",
           "remaining": 0,
           "remaining_resources": [],

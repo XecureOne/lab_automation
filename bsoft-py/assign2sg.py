@@ -2,7 +2,12 @@ import boto3
 import ipaddress
 from botocore.exceptions import ClientError
 
-def add_security_group_rules(security_group_id: str, ip: str, region: str = "ap-south-1") -> None:
+
+def _ctx(student_id=None):
+    return f" student_id={student_id}" if student_id else ""
+
+
+def add_security_group_rules(security_group_id: str, ip: str, region: str = "ap-south-1", student_id=None) -> None:
     """
     Adds SSH inbound rule to an EC2 security group for a specific IP.
     """
@@ -32,16 +37,16 @@ def add_security_group_rules(security_group_id: str, ip: str, region: str = "ap-
             GroupId=security_group_id,
             IpPermissions=inbound_rules,
         )
-        print(f"[✓] Access granted to {ip}/32")
+        print(f"[OK]{_ctx(student_id)} Security group access granted: {ip}/32")
 
     except ClientError as e:
         if e.response["Error"]["Code"] == "InvalidPermission.Duplicate":
-            print("[!] Rule already exists.")
+            print(f"[INFO]{_ctx(student_id)} Security group rule already exists")
         else:
-            print(f"[✗] Error: {e}")
+            print(f"[ERROR]{_ctx(student_id)} Could not add security group rule: {e}")
             raise
 
-def add_sg_rules(security_group_id: str, ip: str, region: str = "ap-south-1") -> None:
+def add_sg_rules(security_group_id: str, ip: str, region: str = "ap-south-1", student_id=None) -> None:
 
     # Validate IP
     try:
@@ -70,16 +75,16 @@ def add_sg_rules(security_group_id: str, ip: str, region: str = "ap-south-1") ->
             GroupId=security_group_id,
             IpPermissions=inbound_rules,
         )
-        print(f"[✓] Access granted to {ip}/32")
+        print(f"[OK]{_ctx(student_id)} GUI access granted: {ip}/32")
 
     except ClientError as e:
         if e.response["Error"]["Code"] == "InvalidPermission.Duplicate":
-            print("[!] Rule already exists.")
+            print(f"[INFO]{_ctx(student_id)} GUI security group rule already exists")
         else:
-            print(f"[✗] Error: {e}")
+            print(f"[ERROR]{_ctx(student_id)} Could not add GUI security group rule: {e}")
             raise
 
-def add_sgid_to_sg(security_group_id: str, source_sg_id: str, region: str = "ap-south-1") -> None:
+def add_sgid_to_sg(security_group_id: str, source_sg_id: str, region: str = "ap-south-1", student_id=None) -> None:
 
     ec2 = boto3.client("ec2", region_name=region)
 
@@ -103,14 +108,14 @@ def add_sgid_to_sg(security_group_id: str, source_sg_id: str, region: str = "ap-
 
     except ClientError as e:
         if e.response["Error"]["Code"] == "InvalidPermission.Duplicate":
-            print("[!] Rule already exists.")
+            print(f"[INFO]{_ctx(student_id)} Source security group rule already exists")
         else:
-            print(f"[✗] Error: {e}")
+            print(f"[ERROR]{_ctx(student_id)} Could not add source security group rule: {e}")
             raise
 
 
 
-def remove_ingress_rule(sg_id, ip):
+def remove_ingress_rule(sg_id, ip, student_id=None):
     try:
         ipaddress.ip_address(ip)
     except ValueError:
@@ -131,9 +136,7 @@ def remove_ingress_rule(sg_id, ip):
                 }
             ],
         )
-        print(f"Removed ingress rule")
+        print(f"[OK]{_ctx(student_id)} Removed ingress rule for {ip}/32")
     except ClientError as e:
-        print(f"Error removing rule: {e}")
+        print(f"[ERROR]{_ctx(student_id)} Could not remove ingress rule: {e}")
         raise
-
-

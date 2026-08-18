@@ -1,5 +1,9 @@
 import boto3
 import nuke
+import logging
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(name)s - %(message)s")
+logger = logging.getLogger(__name__)
 
 
 def _assume_child_role(account_id: str,credentials: dict, role_name: str = "OrganizationAccountAccessRole") -> dict:
@@ -18,22 +22,26 @@ def _assume_child_role(account_id: str,credentials: dict, role_name: str = "Orga
     else:
         sts = boto3.client("sts")
     if sts:
+        logger.info("Assuming role role_name=%s account_id=%s chained_credentials=%s", role_name, account_id, bool(credentials))
         resp = sts.assume_role(
             RoleArn=f"arn:aws:iam::{account_id}:role/{role_name}",
             RoleSessionName="ProvisionerSession",
             DurationSeconds=3600,
     )
     if resp: 
-        print(f"Assumed role: {role_name}")
+        print(f"[OK] Assumed role: {role_name}")
+        logger.info("Assumed role role_name=%s account_id=%s expires_at=%s", role_name, account_id, resp["Credentials"].get("Expiration"))
         return resp["Credentials"]
 
 def _child_creds(account_id):
+    logger.info("Building child credentials account_id=%s", account_id)
     credentials = _assume_child_role(account_id,_assume_child_role("880690594512",{},"rt_provider_core_backend"))
     return credentials
 
 
 def _child_iam(account_id):
     """Return an IAM client authenticated to the child account."""
+    logger.info("Building child IAM client account_id=%s", account_id)
     credentials = _assume_child_role(account_id,_assume_child_role("880690594512",{},"rt_provider_core_backend"))
     return boto3.client(
         "iam",
@@ -41,4 +49,3 @@ def _child_iam(account_id):
         aws_secret_access_key=credentials["SecretAccessKey"],
         aws_session_token=credentials["SessionToken"],
     )
-

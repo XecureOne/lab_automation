@@ -40,18 +40,21 @@ def ipadd_of(student_id):
         return json.load(f).get(student_id)
 
 def cluster(client):
+    print(f"[INFO] student_id={client} Starting cluster deployment")
     STACK_NAME = f"{generate_id()+client+generate_id()}"
     template = template_sel("cluster")
     PARAMETERS1[0]["ParameterValue"] = f"clu_{client}"
     PARAMETERS1[1]["ParameterValue"] = f"asg_{client}"
     PARAMETERS1[2]["ParameterValue"] = client
-    out = lib.create_stack(STACK_NAME,PARAMETERS1,template)
+    out = lib.create_stack(STACK_NAME,PARAMETERS1,template, student_id=client)
     if out: 
         clu = next((o['OutputValue'] for o in out if o['OutputKey'] == "ECSClusterArn"), None)
         asg = next((o['OutputValue'] for o in out if o['OutputKey'] == "ECSAutoScalingGroupArn"), None)
         cluster_add.add_cluster(client,clu,asg,STACK_NAME)
+        print(f"[DONE] student_id={client} Cluster deployment completed")
 
 def service(client):
+    print(f"[INFO] student_id={client} Starting service deployment")
     STACK_NAME = f"{generate_id()+client+generate_id()}"
     template = template_sel("service")
     room = input("Enter the room:")
@@ -61,22 +64,23 @@ def service(client):
             j = json.load(ff)
             PARAMETERS2[0]["ParameterValue"] = f"{i["clu"]}"
             PARAMETERS2[1]["ParameterValue"] = f"{j.get(room)}"
-        lib.scale_asg_from_arn(i["asg"],1)
-    out = lib.create_stack(STACK_NAME,PARAMETERS2,template)
+        lib.scale_asg_from_arn(i["asg"],1, student_id=client)
+    out = lib.create_stack(STACK_NAME,PARAMETERS2,template, student_id=client)
     cluster_add.add_service(client,STACK_NAME)
     if out:
         ip = ''
         client_ip = ipadd_of(client)
         for i in out:
             if i['OutputKey'].startswith('Container'):
-                assign2sg.add_security_group_rules(i['OutputValue'],client_ip)
+                assign2sg.add_security_group_rules(i['OutputValue'],client_ip, student_id=client)
             else:
                 ip = find_ip.get_task_private_ips(PARAMETERS2[0]["ParameterValue"], i['OutputValue'])
-        remote.send_uni_add(ip,client_ip)
+        remote.send_uni_add(ip,client_ip, student_id=client)
+        print(f"[DONE] student_id={client} Service deployment completed")
 
 
 if __name__ == "__main__":
-    choice = input("[*] Deployment : Cluster(C) or Service(S)?? ")
+    choice = input("Deployment: Cluster(C) or Service(S)? ")
     client = str(input("Enter student id:"))
     cluster(client) if choice == "C" else service(client)
 

@@ -5,7 +5,21 @@ INSTANCE_ID = "i-0e7718168aa89ab2b"   # replace
 
 ssm = boto3.client("ssm")
 
-def send_uni_add(ip,client):
+
+def _ctx(student_id=None):
+    return f" student_id={student_id}" if student_id else ""
+
+
+def _print_command_result(command_id, output, student_id=None):
+    print(f"[OK]{_ctx(student_id)} SSM command sent: {command_id}")
+    status = output.get("Status")
+    print(f"[INFO]{_ctx(student_id)} SSM command status: {status}")
+    stderr = output.get("StandardErrorContent", "").strip()
+    if stderr:
+        print(f"[WARN]{_ctx(student_id)} SSM command stderr: {stderr}")
+
+
+def send_uni_add(ip,client, student_id=None):
     commands = []
     commands.append(f"sudo vpnctl add {client} {ip}")
     commands.append("sudo vpnctl list")
@@ -20,7 +34,6 @@ def send_uni_add(ip,client):
     )
 
     command_id = response["Command"]["CommandId"]
-    print("Command ID:", command_id)
 
     # Wait and fetch output
     time.sleep(3)
@@ -30,10 +43,9 @@ def send_uni_add(ip,client):
         InstanceId=INSTANCE_ID
     )
 
-    print("STDOUT:\n", output["StandardOutputContent"])
-    print("STDERR:\n", output["StandardErrorContent"])
+    _print_command_result(command_id, output, student_id=student_id)
 
-def send_add(ip,ip2,client):
+def send_add(ip,ip2,client, student_id=None):
     # Command to run
     commands = []
     commands.append(f"sudo vpnctl add {client} {ip}")
@@ -50,7 +62,6 @@ def send_add(ip,ip2,client):
     )
 
     command_id = response["Command"]["CommandId"]
-    print("Command ID:", command_id)
 
     # Wait and fetch output
     time.sleep(3)
@@ -60,10 +71,9 @@ def send_add(ip,ip2,client):
         InstanceId=INSTANCE_ID
     )
 
-    print("STDOUT:\n", output["StandardOutputContent"])
-    print("STDERR:\n", output["StandardErrorContent"])
+    _print_command_result(command_id, output, student_id=student_id)
 
-def send_del(client):
+def send_del(client, student_id=None):
     # Command to run
     commands = []
     commands.append(f"sudo vpnctl delete {client}")
@@ -79,7 +89,6 @@ def send_del(client):
     )
 
     command_id = response["Command"]["CommandId"]
-    print("Command ID:", command_id)
 
     # Wait and fetch output
     time.sleep(3)
@@ -89,10 +98,9 @@ def send_del(client):
         InstanceId=INSTANCE_ID
     )
 
-    print("STDOUT:\n", output["StandardOutputContent"])
-    print("STDERR:\n", output["StandardErrorContent"])
+    _print_command_result(command_id, output, student_id=student_id)
 
-def send_uni_del(client,ip):
+def send_uni_del(client,ip, student_id=None):
     # Command to run
     commands = []
     commands.append(f"sudo vpnctl delete {client} {ip}")
@@ -108,7 +116,6 @@ def send_uni_del(client,ip):
     )
 
     command_id = response["Command"]["CommandId"]
-    print("Command ID:", command_id)
 
     # Wait and fetch output
     time.sleep(3)
@@ -118,10 +125,9 @@ def send_uni_del(client,ip):
         InstanceId=INSTANCE_ID
     )
 
-    print("STDOUT:\n", output["StandardOutputContent"])
-    print("STDERR:\n", output["StandardErrorContent"])
+    _print_command_result(command_id, output, student_id=student_id)
 
-def check():
+def check(student_id=None):
     commands = []
     commands.append(f"echo hi")
 
@@ -134,7 +140,6 @@ def check():
     )
 
     command_id = response["Command"]["CommandId"]
-    print("Command ID:", command_id)
 
     # Wait and fetch output
     time.sleep(3)
@@ -144,5 +149,4 @@ def check():
         InstanceId=INSTANCE_ID
     )
 
-    print("STDOUT:\n", output["StandardOutputContent"])
-    print("STDERR:\n", output["StandardErrorContent"])
+    _print_command_result(command_id, output, student_id=student_id)
