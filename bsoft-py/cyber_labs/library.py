@@ -15,7 +15,7 @@ def _ctx(student_id=None):
     return f" student_id={student_id}" if student_id else ""
 
 
-def start_instance(lab, lab_type, student_id, image_id, inst_type, tier):
+def start_instance(lab, lab_type, student_id, image_id, inst_type, tier, storage = ""):
     global INSTANCE_TYPE
     INSTANCE_TYPE = tier
     if INSTANCE_TYPE:
@@ -59,6 +59,8 @@ def start_instance(lab, lab_type, student_id, image_id, inst_type, tier):
     security_group_id = sg_response["GroupId"]
     print(f"[OK]{_ctx(student_id)} Security group created: {security_group_id}")
 
+    storage = 8 if (storage == "" or storage == None) else int(storage)
+
     response = ec2.run_instances(
     ImageId=f'{image_id}',
     InstanceType=INSTANCE_TYPE,
@@ -67,6 +69,17 @@ def start_instance(lab, lab_type, student_id, image_id, inst_type, tier):
     
     UserData=lab,
     KeyName="mumb",   
+
+    BlockDeviceMappings=[
+        {
+            "DeviceName": "/dev/sda1",
+            "Ebs": {
+                "VolumeSize": storage,       # GB
+                "VolumeType": "gp3",
+                "DeleteOnTermination": True
+            }
+        }
+    ],
 
     NetworkInterfaces=[
         {
