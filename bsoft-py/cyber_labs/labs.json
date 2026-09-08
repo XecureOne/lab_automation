@@ -150,7 +150,7 @@
   "lab9.1": {
     "class": "ami",
     "type": "CLI",
-    "tier": "t3.micro"
+    "tier": "t3.micro",
     "id":"ami-09965f9aa16936e08"
   },
   "lab9.2": {
@@ -177,7 +177,7 @@
   "lab10.2": {
     "class": "ami",
     "type": "CLI",
-    "tier": "t3.micro"
+    "tier": "t3.micro",
     "id":"ami-0dfc1478d39c43a11"
   },
   "lab10.3": {
@@ -186,13 +186,13 @@
   "lab10.4": {
     "class": "ami",
     "type": "CLI",
-    "tier": "t3.micro"
+    "tier": "t3.micro",
     "id":"ami-0a98136aa343f898d"
   },
   "lab10.5": {
     "class": "ami",
     "type": "CLI",
-    "tier": "t3.micro"
+    "tier": "t3.micro",
     "id":"ami-053c87116ece7d2bf"
   },
 
