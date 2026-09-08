@@ -64,7 +64,9 @@ def start_lab():
         image_file = fetch_lab_file(lab_id) if lab_class=="bash" else ""
         image_id = fetch_lab_image(lab_type) if lab_class=="bash" else lab_details["id"]
         tier = lab_details["tier"]
-        dat = library.start_instance(image_file,"lab",student_id,image_id,lab_type,tier)
+        terminal = lab_details.get("terminal")
+        storage = lab_details.get("storage")
+        dat = library.start_instance(image_file,"lab",student_id,image_id,lab_type,tier,storage)
         ip = fetch_static_ip(student_id)
         if dat:
             store(lab_id,dat["instance_id"])
