@@ -1,53 +1,63 @@
 {
   "lab1.1": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
   "lab1.2": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
   "lab1.3": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
   "lab1.4": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
 
   "lab2.1": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
   "lab2.2": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
   "lab2.3": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
 
   "lab3.1": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
   "lab3.2": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
   "lab3.3": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
@@ -57,6 +67,7 @@
   },
   "lab4.2": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
@@ -65,23 +76,27 @@
   },
   "lab4.4": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
 
   "lab5.1": {
     "class": "ami",
+    "access": ["terminal"],
     "type": "GUI",
     "tier": "t3.medium",
     "id":"ami-07913f6b555fac7d4"
   },
   "lab5.2": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
   "lab5.3": {
     "class": "ami",
+    "access": ["terminal"],
     "type": "GUI",
     "tier": "t3.medium",
     "id":"ami-03bdc4c4fa143ade5"
@@ -92,16 +107,19 @@
   },
   "lab6.2": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
   "lab6.3": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
   "lab6.4": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
@@ -111,11 +129,13 @@
   },
   "lab7.2": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
   "lab7.3": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
@@ -125,23 +145,27 @@
 
   "lab8.1": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
   "lab8.2": {
     "class": "ami",
+    "access": ["terminal"],
     "type": "GUI",
     "tier": "t3.micro",
     "id":"ami-0a2452241e5549f13"
   },
   "lab8.3": {
     "class": "ami",
+    "access": ["terminal"],
     "type": "GUI",
     "tier": "t3.medium",
     "id":"ami-0c08bc9bf7782a28e"
   },
   "lab8.4": {
     "class": "ami",
+    "access": ["terminal"],
     "type": "GUI",
     "tier": "t3.micro",
     "id":"ami-096119ac3cf893665"
@@ -149,12 +173,14 @@
 
   "lab9.1": {
     "class": "ami",
+    "access": ["terminal", "web"],
     "type": "CLI",
     "tier": "t3.micro",
     "id":"ami-09965f9aa16936e08"
   },
   "lab9.2": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
@@ -163,6 +189,7 @@
   },
   "lab9.4": {
     "class": "ami",
+    "access": ["terminal", "web"],
     "type": "CLI",
     "tier": "t3.micro",
     "id":"ami-0a907c32ca3e6675b"
@@ -170,12 +197,14 @@
 
   "lab10.1": {
     "class": "ami",
+    "access": ["terminal"],
     "type": "GUI",
     "tier": "t3.large",
     "id":"ami-0f38ffc97601d401b"
   },
   "lab10.2": {
     "class": "ami",
+    "access": ["terminal", "web"],
     "type": "CLI",
     "tier": "t3.m042da4dicro",
     "id":"ami-0dfc1478d39c43a11"
@@ -185,12 +214,14 @@
   },
   "lab10.4": {
     "class": "ami",
+    "access": ["terminal", "web"],
     "type": "CLI",
     "tier": "t3.micro",
     "id":"ami-0a98136aa343f898d"
   },
   "lab10.5": {
     "class": "ami",
+    "access": ["terminal", "web"],
     "type": "CLI",
     "tier": "t3.micro",
     "id":"ami-053c87116ece7d2bf"
@@ -201,6 +232,7 @@
   },
   "lab11.2": {
     "class": "ami",
+    "access": ["terminal", "web"],
     "type": "GUI",
     "tier": "t3.medium",
     "id":"ami-0b662f83c162681cb"
@@ -214,6 +246,7 @@
   },
   "lab12.2": {
     "class": "bash",
+    "access": ["terminal"],
     "type": "CLI",
     "tier": "t3.micro"
   },
