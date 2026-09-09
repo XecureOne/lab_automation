@@ -206,7 +206,7 @@
     "class": "ami",
     "access": ["terminal", "web"],
     "type": "CLI",
-    "tier": "t3.m042da4dicro",
+    "tier": "t3.micro",
     "id":"ami-0dfc1478d39c43a11"
   },
   "lab10.3": {
